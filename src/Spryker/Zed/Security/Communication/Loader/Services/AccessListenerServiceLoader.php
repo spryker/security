@@ -45,6 +45,7 @@ class AccessListenerServiceLoader implements ServiceLoaderInterface
                 $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                 $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
                 $container->get(static::SERVICE_SECURITY_ACCESS_MAP),
+                false,
             );
         });
 
