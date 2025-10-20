@@ -35,5 +35,5 @@ parameters:
             identifier: missingType.iterableValue
     excludePaths:
         # phpstan throws an internal error because of autoloading `Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface` which does not exist in Symfony 6+
-        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Security/src/Spryker/Zed/Security/Communication/Plugin/Application/SecurityApplicationPlugin.php'
-        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php'
+        - '%rootDir%/../../../src/Spryker/Security/src/Spryker/Zed/Security/Communication/Plugin/Application/SecurityApplicationPlugin.php'
+        - '%rootDir%/../../../src/Spryker/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php'
