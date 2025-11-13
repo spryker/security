@@ -329,7 +329,6 @@ class YvesSecurityApplicationPluginTest extends Unit
 
         $this->tester->mockSecurityDependencies();
         $this->tester->mockYvesSecurityPlugin($securityConfiguration);
-        $this->tester->mockSecurityDependencies();
         $this->tester->enableSecurityApplicationPlugin();
 
         $container = $this->tester->getContainer();
