@@ -1093,7 +1093,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($options, $container) {
                 return new DefaultAuthenticationFailureHandler(
-                    $container->get(static::SERVICE_KERNEL),
+                    $this->getKernelService($container),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $options,
                     $this->getLogger($container),
@@ -1481,7 +1481,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $loginPath = $options['login_path'] ?? '/login';
                 $useForward = $options['use_forward'] ?? false;
 
-                return new FormAuthenticationEntryPoint($container->get(static::SERVICE_KERNEL), $container->get(static::SERVICE_SECURITY_HTTP_UTILS), $loginPath, $useForward);
+                return new FormAuthenticationEntryPoint($this->getKernelService($container), $container->get(static::SERVICE_SECURITY_HTTP_UTILS), $loginPath, $useForward);
             };
         }));
 
@@ -1769,5 +1769,18 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $this->authenticationListenerFactoryTypes,
             );
         }
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return mixed
+     */
+    protected function getKernelService(ContainerInterface $container)
+    {
+        // Fallback for backward compatibility with older Symfony versions
+        return $container->has(static::SERVICE_KERNEL)
+            ? $container->get(static::SERVICE_KERNEL)
+            : $container->get('http_kernel');
     }
 }
