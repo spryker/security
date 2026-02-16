@@ -488,7 +488,7 @@ class FirewallServiceLoader implements ServiceLoaderInterface
 
             $firewallMap->add(
                 $requestMatcher,
-                $this->mapListeners($container, $config[static::OPTION_LISTENERS]),
+                $this->mapListeners($container, $config[static::OPTION_LISTENERS]), // @phpstan-ignore argument.type (array_filter doesn't preserve list structure)
                 $config[static::OPTION_PROTECTED] ? $container->get(static::SERVICE_SECURITY_EXCEPTION_LISTENER . $firewallName) : null,
             );
         }

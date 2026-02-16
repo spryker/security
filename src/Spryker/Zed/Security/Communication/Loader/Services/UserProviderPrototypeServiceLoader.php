@@ -60,7 +60,7 @@ class UserProviderPrototypeServiceLoader implements ServiceLoaderInterface
                     ];
                 }
 
-                /** @var array<mixed> $users */
+                /** @var array<non-empty-array<string, mixed>> $users */
                 return new InMemoryUserProvider($users);
             };
         }));

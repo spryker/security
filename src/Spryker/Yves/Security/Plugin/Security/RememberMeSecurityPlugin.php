@@ -126,6 +126,7 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
                     'remember_me_parameter' => '_remember_me',
                 ], $options);
 
+                // @phpstan-ignore function.alreadyNarrowedType (defensive programming for type safety)
                 if (!is_array($options)) {
                     throw new Exception('An error occured "array_replace" returned "null".');
                 }

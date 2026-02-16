@@ -68,7 +68,6 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 
 /**
- * @method \Spryker\Zed\Security\Communication\SecurityFacadeInterface getFacade()
  * @method \Spryker\Zed\Security\SecurityConfig getConfig()
  */
 class SecurityCommunicationFactory extends AbstractCommunicationFactory

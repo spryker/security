@@ -342,7 +342,7 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
             return function () use ($container, $firewallName, $options): FirewallListenerInterface {
                 $this->securityRouter->addSecurityRoute($options[static::OPTION_LOGOUT_PATH] ?? static::URI_LOGOUT);
 
-                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+                /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
                 $eventDispatcher = $this->getDispatcher($container);
 
                 $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
