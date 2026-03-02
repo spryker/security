@@ -177,19 +177,11 @@ class FirewallServiceLoader implements ServiceLoaderInterface
      */
     protected SecurityConfiguratorInterface $securityConfigurator;
 
-    /**
-     * @param \Spryker\Zed\Security\Communication\Configurator\SecurityConfiguratorInterface $securityConfigurator
-     */
     public function __construct(SecurityConfiguratorInterface $securityConfigurator)
     {
         $this->securityConfigurator = $securityConfigurator;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_FIREWALL, function (ContainerInterface $container): EventSubscriberInterface {
@@ -429,13 +421,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param string $firewallName
-     * @param string|null $entryPoint
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function setFirewallExceptionListener(string $firewallName, ?string $entryPoint, ContainerInterface $container): ContainerInterface
     {
         if ($container->has(static::SERVICE_SECURITY_EXCEPTION_LISTENER . $firewallName)) {
@@ -455,12 +440,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param array $configs
-     *
-     * @return \Symfony\Component\Security\Http\FirewallMapInterface
-     */
     protected function buildFirewallMap(ContainerInterface $container, array $configs): FirewallMapInterface
     {
         $firewallMap = new FirewallMap();
@@ -486,12 +465,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         return $firewallMap;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param array $listeners
-     *
-     * @return array
-     */
     protected function mapListeners(ContainerInterface $container, array $listeners): array
     {
         $mappedListeners = array_map(function ($listenerId) use ($container) {

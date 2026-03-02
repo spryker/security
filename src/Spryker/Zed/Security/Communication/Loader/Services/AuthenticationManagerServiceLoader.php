@@ -23,19 +23,11 @@ class AuthenticationManagerServiceLoader implements ServiceLoaderInterface
      */
     protected AuthenticatorManagerInterface $authenticatorManager;
 
-    /**
-     * @param \Spryker\Zed\Security\Communication\Loader\AuthenticatorManager\AuthenticatorManagerInterface $authenticatorManager
-     */
     public function __construct(AuthenticatorManagerInterface $authenticatorManager)
     {
         $this->authenticatorManager = $authenticatorManager;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER, $container->protect(function (string $firewallName, array $options) use ($container): callable {

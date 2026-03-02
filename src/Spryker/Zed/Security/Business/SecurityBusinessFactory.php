@@ -18,9 +18,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface 
  */
 class SecurityBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\Security\Business\Security\AuthorizationCheckerInterface
-     */
     public function createSecurityAuthorizationChecker(): AuthorizationCheckerInterface
     {
         return new AuthorizationChecker(
@@ -28,9 +25,6 @@ class SecurityBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
-     */
     public function getAuthorizationCheckerService(): SymfonyAuthorizationCheckerInterface
     {
         return $this->getProvidedDependency(SecurityDependencyProvider::SERVICE_SECURITY_AUTHORIZATION_CHECKER);

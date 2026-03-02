@@ -41,11 +41,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
-     */
     public function supports(Request $request): bool
     {
         return (bool)$request->headers->get('X-AUTH-TOKEN');
@@ -86,12 +81,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         return null;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $data = [
@@ -101,12 +90,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         return new JsonResponse($data, 403);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException|null $authException
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
         $data = [
@@ -116,9 +99,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         return new JsonResponse($data, 401);
     }
 
-    /**
-     * @return bool
-     */
     public function supportsRememberMe(): bool
     {
         return false;

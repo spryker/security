@@ -18,11 +18,6 @@ class LastErrorServiceLoader implements ServiceLoaderInterface
      */
     protected const SERVICE_SECURITY_LAST_ERROR = 'security.last_error';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_LAST_ERROR, $container->protect(function (Request $request): ?string {

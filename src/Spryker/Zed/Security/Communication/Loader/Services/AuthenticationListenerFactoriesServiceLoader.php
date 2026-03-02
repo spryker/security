@@ -51,11 +51,6 @@ class AuthenticationListenerFactoriesServiceLoader implements ServiceLoaderInter
         'user_session_handler',
     ];
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         foreach (static::DEFAULT_AUTHENTICATION_LISTENER_FACTORY_TYPES as $type) {
@@ -94,11 +89,6 @@ class AuthenticationListenerFactoriesServiceLoader implements ServiceLoaderInter
         return $container;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return string|null
-     */
     protected function getEntryPoint(string $type): ?string
     {
         if (in_array($type, static::ENTRY_POINTS)) {

@@ -99,9 +99,6 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getFirewalls(): array
     {
         $this->assertFrozen();
@@ -123,9 +120,6 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getAccessRules(): array
     {
         $this->assertFrozen();
@@ -149,9 +143,6 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getRoleHierarchies(): array
     {
         $this->assertFrozen();
@@ -245,12 +236,6 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
         return $this->logoutHandlers;
     }
 
-    /**
-     * @param string $firewallName
-     * @param callable $accessDeniedHandler
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     public function addAccessDeniedHandler(string $firewallName, callable $accessDeniedHandler): SecurityBuilderInterface
     {
         $this->assertNotFrozen();
@@ -270,11 +255,6 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
         return $this->accessDeniedHandlers;
     }
 
-    /**
-     * @param callable $eventSubscriber
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     public function addEventSubscriber(callable $eventSubscriber): SecurityBuilderInterface
     {
         $this->assertNotFrozen();
@@ -284,9 +264,6 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getEventSubscribers(): array
     {
         $this->assertFrozen();

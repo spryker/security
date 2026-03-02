@@ -63,31 +63,16 @@ class UserPasswordValidatorConstraintPlugin extends AbstractPlugin implements Co
         return $this->createUserPasswordValidator($container);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Validator\ConstraintValidatorInterface
-     */
     protected function createUserPasswordValidator(ContainerInterface $container): ConstraintValidatorInterface
     {
         return new UserPasswordValidator($this->getTokenStorage($container), $this->getEncoderStorage($container));
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
     protected function getTokenStorage(ContainerInterface $container): TokenStorageInterface
     {
         return $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface
-     */
     protected function getEncoderStorage(ContainerInterface $container): EncoderFactoryInterface
     {
         return $container->get(static::SERVICE_SECURITY_ENCODER_FACTORY);

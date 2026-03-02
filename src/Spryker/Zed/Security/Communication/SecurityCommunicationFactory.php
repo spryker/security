@@ -85,49 +85,31 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(SecurityDependencyProvider::PLUGINS_SECURITY);
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
-     */
     public function createPasswordEncoder(): PasswordEncoderInterface
     {
         return new NativePasswordEncoder(null, null, $this->getConfig()->getBCryptCost());
     }
 
-    /**
-     * @return \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface
-     */
     public function createSessionStrategy(): SessionAuthenticationStrategyInterface
     {
         return new SessionAuthenticationStrategy(SessionAuthenticationStrategy::MIGRATE);
     }
 
-    /**
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     public function createSecurityConfiguration(): SecurityBuilderInterface
     {
         return new SecurityConfiguration();
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
     public function createTokenStorage(): TokenStorageInterface
     {
         return new TokenStorage();
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\User\UserCheckerInterface
-     */
     public function createUserChecker(): UserCheckerInterface
     {
         return new UserChecker();
     }
 
-    /**
-     * @return \Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
-     */
     public function createRetryAuthenticationEntryPoint(): AuthenticationEntryPointInterface
     {
         return new RetryAuthenticationEntryPoint(
@@ -136,25 +118,16 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Security\Http\AccessMapInterface
-     */
     public function createAccessMap(): AccessMapInterface
     {
         return new AccessMap();
     }
 
-    /**
-     * @return \Symfony\Component\Security\Http\Logout\LogoutHandlerInterface
-     */
     public function createSessionLogoutHandler(): LogoutHandlerInterface
     {
         return new SessionLogoutHandler();
     }
 
-    /**
-     * @return \Symfony\Component\Config\Loader\Loader
-     */
     public function createClosureLoader(): Loader
     {
         return new ClosureLoader();
@@ -168,17 +141,11 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         return new RouteCollection();
     }
 
-    /**
-     * @return \Symfony\Component\PasswordHasher\PasswordHasherInterface
-     */
     public function createPasswordHasher(): PasswordHasherInterface
     {
         return new NativePasswordHasher(null, null, $this->getConfig()->getBCryptCost());
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Configurator\SecurityConfiguratorInterface
-     */
     public function createSecurityConfigurator(): SecurityConfiguratorInterface
     {
         return new SecurityConfigurator(
@@ -187,17 +154,11 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Router\SecurityRouterInterface
-     */
     public function getSecurityRouter(): SecurityRouterInterface
     {
         return $this->getProvidedDependency(SecurityDependencyProvider::SECURITY_ROUTERS);
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Subscriber\SecurityDispatcherSubscriberInterface
-     */
     public function createSecurityDispatcherSubscriber(): SecurityDispatcherSubscriberInterface
     {
         return new SecurityDispatcherSubscriber(
@@ -205,9 +166,6 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\ServicesLoaderInterface
-     */
     public function createServicesLoader(): ServicesLoaderInterface
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
@@ -251,25 +209,16 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthorizationCheckerServiceLoader(): ServiceLoaderInterface
     {
         return new AuthorizationCheckerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createTokenStorageServiceLoader(): ServiceLoaderInterface
     {
         return new TokenStorageServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthenticationManagerServiceLoader(): ServiceLoaderInterface
     {
         return new AuthenticationManagerServiceLoader(
@@ -277,9 +226,6 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createEncoderServiceLoader(): ServiceLoaderInterface
     {
         return new EncoderServiceLoader(
@@ -287,25 +233,16 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createUserCheckerServiceLoader(): ServiceLoaderInterface
     {
         return new UserCheckerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createAccessManagerServiceLoader(): ServiceLoaderInterface
     {
         return new AccessManagerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createVotersServiceLoader(): ServiceLoaderInterface
     {
         return new VotersServiceLoader(
@@ -313,9 +250,6 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createFirewallServiceLoader(): ServiceLoaderInterface
     {
         return new FirewallServiceLoader(
@@ -323,9 +257,6 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createChannelListenerServiceLoader(): ServiceLoaderInterface
     {
         return new ChannelListenerServiceLoader(
@@ -333,25 +264,16 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthenticationListenerFactoriesServiceLoader(): ServiceLoaderInterface
     {
         return new AuthenticationListenerFactoriesServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createAccessListenerServiceLoader(): ServiceLoaderInterface
     {
         return new AccessListenerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createAccessMapServiceLoader(): ServiceLoaderInterface
     {
         return new AccessMapServiceLoader(
@@ -359,49 +281,31 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createTrustResolverServiceLoader(): ServiceLoaderInterface
     {
         return new TrustResolverServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createUtilsServiceLoader(): ServiceLoaderInterface
     {
         return new UtilsServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createLastErrorServiceLoader(): ServiceLoaderInterface
     {
         return new LastErrorServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createUserProviderPrototypeServiceLoader(): ServiceLoaderInterface
     {
         return new UserProviderPrototypeServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createListenerPrototypeServiceLoader(): ServiceLoaderInterface
     {
         return new ListenerPrototypeServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthenticationListenerPrototypesServiceLoader(): ServiceLoaderInterface
     {
         return new AuthenticationListenerPrototypesServiceLoader(
@@ -411,17 +315,11 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\Services\ServiceLoaderInterface
-     */
     public function createEntryPointPrototypesServiceLoader(): ServiceLoaderInterface
     {
         return new EntryPointPrototypesServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Validator\UserPasswordValidatorConstraintInterface
-     */
     public function createUserPasswordValidatorConstraint(): UserPasswordValidatorConstraintInterface
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
@@ -431,9 +329,6 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         return new UserPasswordValidatorConstraint();
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Booter\SecurityApplicationBooterInterface
-     */
     public function createSecurityApplicationBooter(): SecurityApplicationBooterInterface
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
@@ -450,9 +345,6 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\Loader\AuthenticatorManager\AuthenticatorManagerInterface
-     */
     public function createAuthenticatorManager(): AuthenticatorManagerInterface
     {
         return new AuthenticatorManager();

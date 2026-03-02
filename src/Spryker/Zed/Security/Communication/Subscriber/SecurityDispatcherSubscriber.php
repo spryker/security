@@ -29,19 +29,11 @@ class SecurityDispatcherSubscriber implements SecurityDispatcherSubscriberInterf
      */
     protected SecurityConfiguratorInterface $securityConfigurator;
 
-    /**
-     * @param \Spryker\Zed\Security\Communication\Configurator\SecurityConfiguratorInterface $securityConfigurator
-     */
     public function __construct(SecurityConfiguratorInterface $securityConfigurator)
     {
         $this->securityConfigurator = $securityConfigurator;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return void
-     */
     public function addSubscriber(ContainerInterface $container): void
     {
         /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher */

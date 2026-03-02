@@ -23,11 +23,6 @@ class AccessManagerServiceLoader implements ServiceLoaderInterface
      */
     protected const SERVICE_SECURITY_VOTERS = 'security.voters';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ACCESS_MANAGER, function (ContainerInterface $container): AccessDecisionManagerInterface {

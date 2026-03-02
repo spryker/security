@@ -25,19 +25,11 @@ class EncoderServiceLoader implements ServiceLoaderInterface
      */
     protected PasswordHasherInterface $passwordHasher;
 
-    /**
-     * @param \Symfony\Component\PasswordHasher\PasswordHasherInterface $passwordHasher
-     */
     public function __construct(PasswordHasherInterface $passwordHasher)
     {
         $this->passwordHasher = $passwordHasher;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_HASHER_FACTORY, function (): PasswordHasherFactoryInterface {

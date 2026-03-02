@@ -123,9 +123,6 @@ class SecurityApplicationPluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         parent::_before();
@@ -137,9 +134,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->tester->enableSecurityApplicationPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testProvideAddsAllServices(): void
     {
         // Arrange
@@ -178,9 +172,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->tester->getKernel()->handle(Request::create(static::HOMEPAGE_PATH));
     }
 
-    /**
-     * @return void
-     */
     public function testFormAuthentication(): void
     {
         $this->addFormAuthentication();
@@ -207,9 +198,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('userAUTHENTICATEDUSER', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testHttpAuthentication(): void
     {
         $this->addHttpAuthentication();
@@ -225,9 +213,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('userAUTHENTICATEDUSER', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testGuardAuthentication(): void
     {
         $this->addGuardAuthentication();
@@ -249,9 +234,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame(static::USER_NAME, $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testWithOwnAuthenticationSuccessHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -266,12 +248,6 @@ class SecurityApplicationPluginTest extends Unit
         $securityConfiguration->addAuthenticationSuccessHandler('default', function () {
             return new class implements AuthenticationSuccessHandlerInterface
             {
-                /**
-                 * @param \Symfony\Component\HttpFoundation\Request $request
-                 * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-                 *
-                 * @return \Symfony\Component\HttpFoundation\Response
-                 */
                 public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
                 {
                     return new Response('authentication success');
@@ -308,12 +284,6 @@ class SecurityApplicationPluginTest extends Unit
         $securityConfiguration->addAuthenticationFailureHandler('default', function () {
             return new class implements AuthenticationFailureHandlerInterface
             {
-                /**
-                 * @param \Symfony\Component\HttpFoundation\Request $request
-                 * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-                 *
-                 * @return \Symfony\Component\HttpFoundation\Response
-                 */
                 public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
                 {
                     return new Response('authentication failure');
@@ -333,9 +303,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('authentication failure', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testFirewallWithMethod(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -357,9 +324,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
     }
 
-    /**
-     * @return void
-     */
     public function testFirewallWithHost(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -384,9 +348,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame(200, $httpKernelBrowser->getResponse()->getStatusCode());
     }
 
-    /**
-     * @return void
-     */
     public function testUserWithNoToken(): void
     {
         $container = $this->tester->getContainer();
@@ -406,9 +367,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertNull($token);
     }
 
-    /**
-     * @return void
-     */
     public function testUserWithInvalidUser(): void
     {
         $container = $this->tester->getContainer();
@@ -429,9 +387,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertNull($token);
     }
 
-    /**
-     * @return void
-     */
     public function testAccessRulePathArray(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -455,9 +410,6 @@ class SecurityApplicationPluginTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function testExposedExceptions(): void
     {
         $container = $this->tester->getContainer();
@@ -480,9 +432,6 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->getRequest()->getSession()->save();
     }
 
-    /**
-     * @return void
-     */
     public function testLastErrorReturnSecurityAuthenticationError(): void
     {
         // Arrange
@@ -499,9 +448,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('security error', $securityError);
     }
 
-    /**
-     * @return void
-     */
     protected function addFormAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -562,9 +508,6 @@ class SecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function addHttpAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -597,9 +540,6 @@ class SecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function addGuardAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();

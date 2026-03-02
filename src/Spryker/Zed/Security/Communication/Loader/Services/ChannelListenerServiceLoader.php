@@ -34,19 +34,11 @@ class ChannelListenerServiceLoader implements ServiceLoaderInterface
      */
     protected SecurityConfig $config;
 
-    /**
-     * @param \Spryker\Zed\Security\SecurityConfig $config
-     */
     public function __construct(SecurityConfig $config)
     {
         $this->config = $config;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_CHANNEL_LISTENER, function (ContainerInterface $container): FirewallListenerInterface {

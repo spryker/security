@@ -22,9 +22,6 @@ use Spryker\Yves\Security\SecurityDependencyProvider;
  */
 class SecurityDependencyProviderTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProvideAddsSecurityPlugins(): void
     {
         $container = new Container();

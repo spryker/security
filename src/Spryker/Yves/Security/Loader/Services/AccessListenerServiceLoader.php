@@ -33,11 +33,6 @@ class AccessListenerServiceLoader implements ServiceLoaderInterface
      */
     protected const SERVICE_SECURITY_ACCESS_MAP = 'security.access_map';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ACCESS_LISTENER, function (ContainerInterface $container): FirewallListenerInterface {

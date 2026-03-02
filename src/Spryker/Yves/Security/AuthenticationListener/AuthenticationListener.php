@@ -50,9 +50,6 @@ class AuthenticationListener implements AuthenticationListenerInterface
         return static::$authenticationListenerFactoryTypes;
     }
 
-    /**
-     * @return void
-     */
     protected function initializeAuthenticationListenerFactoryTypes(): void
     {
         static::$authenticationListenerFactoryTypes = static::DEFAULT_AUTHENTICATION_LISTENER_FACTORY_TYPES;

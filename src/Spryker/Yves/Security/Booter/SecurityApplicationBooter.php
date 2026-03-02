@@ -23,10 +23,6 @@ class SecurityApplicationBooter implements SecurityApplicationBooterInterface
      */
     protected SecurityRouterInterface $router;
 
-    /**
-     * @param \Spryker\Yves\Security\Subscriber\SecurityDispatcherSubscriberInterface $securityDispatcherSubscriber
-     * @param \Spryker\Yves\Security\Router\SecurityRouterInterface $router
-     */
     public function __construct(
         SecurityDispatcherSubscriberInterface $securityDispatcherSubscriber,
         SecurityRouterInterface $router
@@ -35,11 +31,6 @@ class SecurityApplicationBooter implements SecurityApplicationBooterInterface
         $this->router = $router;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function boot(ContainerInterface $container): ContainerInterface
     {
         $this->securityDispatcherSubscriber->addSubscriber($container);

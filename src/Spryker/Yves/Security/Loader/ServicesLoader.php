@@ -24,11 +24,6 @@ class ServicesLoader implements ServicesLoaderInterface
         $this->serviceLoaders = $serviceLoaders;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function provide(ContainerInterface $container): ContainerInterface
     {
         foreach ($this->serviceLoaders as $serviceLoader) {

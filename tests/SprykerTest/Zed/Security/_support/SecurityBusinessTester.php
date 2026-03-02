@@ -29,9 +29,6 @@ class SecurityBusinessTester extends Actor
 {
     use _generated\SecurityBusinessTesterActions;
 
-    /**
-     * @return bool
-     */
     public function isUserLoggedIn(): bool
     {
         return $this->getLocator()->security()->facade()->isUserLoggedIn();

@@ -45,19 +45,11 @@ class AuthenticationListenerFactoriesServiceLoader implements ServiceLoaderInter
      */
     protected AuthenticationListenerInterface $authenticationListener;
 
-    /**
-     * @param \Spryker\Yves\Security\AuthenticationListener\AuthenticationListenerInterface $authenticationListener
-     */
     public function __construct(AuthenticationListenerInterface $authenticationListener)
     {
         $this->authenticationListener = $authenticationListener;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         foreach ($this->authenticationListener->getAuthenticationListenerFactoryTypes() as $type) {
@@ -89,11 +81,6 @@ class AuthenticationListenerFactoriesServiceLoader implements ServiceLoaderInter
         return $container;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return string|null
-     */
     protected function getEntryPoint(string $type): ?string
     {
         if (in_array($type, static::ENTRY_POINTS)) {

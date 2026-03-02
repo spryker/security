@@ -39,11 +39,6 @@ class SecurityRouter implements SecurityRouterInterface
      */
     protected array $securityRoutes = [];
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return void
-     */
     public function addRouter(ContainerInterface $container): void
     {
         $loader = new ClosureLoader();
@@ -72,12 +67,6 @@ class SecurityRouter implements SecurityRouterInterface
         $container->get(static::SERVICE_ROUTER)->add($router, 1);
     }
 
-    /**
-     * @param string $routeNameOrUrl
-     * @param string|null $routeName
-     *
-     * @return void
-     */
     public function addSecurityRoute(
         string $routeNameOrUrl,
         ?string $routeName = null
@@ -88,11 +77,6 @@ class SecurityRouter implements SecurityRouterInterface
         $this->securityRoutes[] = [$url, $routeName];
     }
 
-    /**
-     * @param string $routeNameOrUrl
-     *
-     * @return string
-     */
     protected function buildUrl(string $routeNameOrUrl): string
     {
         if ($routeNameOrUrl[0] === '/') {
@@ -102,12 +86,6 @@ class SecurityRouter implements SecurityRouterInterface
         return '/' . str_replace('_', '/', ltrim($routeNameOrUrl, '/'));
     }
 
-    /**
-     * @param string $routeNameOrUrl
-     * @param string|null $routeName
-     *
-     * @return string
-     */
     protected function buildRouteName(string $routeNameOrUrl, ?string $routeName = null): string
     {
         if ($routeName) {

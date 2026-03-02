@@ -385,11 +385,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
-     */
     protected function getSecurityConfiguration(ContainerInterface $container): SecurityConfigurationInterface
     {
         if ($this->securityConfiguration === null) {
@@ -399,11 +394,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $this->securityConfiguration;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
-     */
     protected function getSecurityConfigurationFromPlugins(ContainerInterface $container): SecurityConfigurationInterface
     {
         $securityConfiguration = $this->getFactory()->createSecurityConfiguration();
@@ -414,11 +404,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $securityConfiguration->getConfiguration();
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthorizationChecker(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (ContainerInterface $container) {
@@ -433,11 +418,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addTokenStorage(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function () {
@@ -447,11 +427,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addUser(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_USER, $container->factory(function (ContainerInterface $container) {
@@ -472,11 +447,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationManager(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER, function (ContainerInterface $container) {
@@ -489,11 +459,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEncoder(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENCODER_FACTORY, function () {
@@ -505,11 +470,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addUserChecker(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_USER_CHECKER, function () {
@@ -519,11 +479,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAccessManager(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ACCESS_MANAGER, function (ContainerInterface $container) {
@@ -533,11 +488,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addVoters(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_VOTERS, function (ContainerInterface $container) {
@@ -552,11 +502,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addFirewall(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_FIREWALL, function (ContainerInterface $container) {
@@ -697,13 +642,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $this->buildFirewallMap($container, $configs);
     }
 
-    /**
-     * @param string $firewallName
-     * @param string|null $entryPoint
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function setFirewallExceptionListener(string $firewallName, ?string $entryPoint, ContainerInterface $container): ContainerInterface
     {
         if (!$container->has('security.exception_listener.' . $firewallName)) {
@@ -727,12 +665,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param array $configs
-     *
-     * @return \Symfony\Component\Security\Http\FirewallMapInterface
-     */
     protected function buildFirewallMap(ContainerInterface $container, array $configs): FirewallMapInterface
     {
         $firewallMap = new FirewallMap();
@@ -752,13 +684,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $firewallMap;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param array $listeners
-     * @param string $firewallName
-     *
-     * @return array
-     */
     protected function mapListeners(ContainerInterface $container, array $listeners, string $firewallName): array
     {
         return array_map(function ($listenerId) use ($container, $firewallName) {
@@ -780,11 +705,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }, $listeners);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addChannelListener(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_CHANNEL_LISTENER, function (ContainerInterface $container) {
@@ -801,11 +721,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerFactories(ContainerInterface $container): ContainerInterface
     {
         foreach ($this->getAuthenticationListenerFactoryTypes() as $type) {
@@ -836,11 +751,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return string|null
-     */
     protected function getEntryPoint(string $type): ?string
     {
         if (in_array($type, ['http', 'form', 'guard'])) {
@@ -850,11 +760,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return null;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return string|null
-     */
     protected function getProvider(string $type): ?string
     {
         if (in_array($type, ['anonymous', 'guard'])) {
@@ -864,11 +769,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return 'dao';
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAccessListener(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ACCESS_LISTENER, function (ContainerInterface $container) {
@@ -883,11 +783,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAccessMap(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ACCESS_MAP, function (ContainerInterface $container) {
@@ -916,11 +811,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addTrustResolver(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_TRUST_RESOLVER, function () {
@@ -934,11 +824,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addUtils(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_HTTP_UTILS, function (ContainerInterface $container) {
@@ -954,11 +839,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addLastError(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_LAST_ERROR, $container->protect(function (Request $request) {
@@ -984,11 +864,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addUserProviderPrototypes(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO, $container->protect(function ($params) {
@@ -1010,11 +885,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addListenerPrototypes(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_CONTEXT_LISTENER_PROTO, $container->protect(function ($providerKey, $userProviders) use ($container) {
@@ -1047,11 +917,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationHandlerPrototypes(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addAuthenticationSuccessHandlerPrototype($container);
@@ -1061,11 +926,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationSuccessHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_SUCCESS_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
@@ -1083,11 +943,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationFailureHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
@@ -1104,11 +959,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationLogoutHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
@@ -1123,11 +973,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerPrototypes(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addAuthenticationListenerGuardPrototype($container);
@@ -1141,11 +986,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerGuardPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_GUARD_PROTO, $container->protect(function ($providerKey, $options) use ($container) {
@@ -1171,11 +1011,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerFormPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO, $container->protect(function ($name, $options) use ($container) {
@@ -1204,11 +1039,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addCustomerSessionValidatorListenerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_CUSTOMER_SESSION_VALIDATOR_PROTO, $container->protect(function ($firewallName, $options) {
@@ -1221,22 +1051,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param string $name
-     *
-     * @return \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface
-     */
     protected function getSessionStrategy(ContainerInterface $container, string $name): SessionAuthenticationStrategyInterface
     {
         return $container->has('security.session_strategy.' . $name) ? $container->get('security.session_strategy.' . $name) : $this->getFactory()->createSessionStrategy();
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Psr\Log\LoggerInterface|null
-     */
     protected function getLogger(ContainerInterface $container): ?LoggerInterface
     {
         return $container->has(static::SERVICE_LOGGER) ? $container->get(static::SERVICE_LOGGER) : null;
@@ -1290,11 +1109,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container->get('security.authentication.failure_handler.' . $firewallName);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerHttpPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_HTTP_PROTO, $container->protect(function ($providerKey, $options) use ($container) {
@@ -1312,11 +1126,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerAnonymousPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_ANONYMOUS_PROTO, $container->protect(function ($providerKey, $options) use ($container) {
@@ -1332,11 +1141,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerLogoutPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
@@ -1428,11 +1232,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $listener;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerSwitchUserPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_SWITCH_USER_PROTO, $container->protect(function ($firewallName, $options) use ($container) {
@@ -1455,11 +1254,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointPrototypes(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addEntryPointFormPrototype($container);
@@ -1469,11 +1263,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointFormPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO, $container->protect(function ($name, array $options) use ($container) {
@@ -1488,11 +1277,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointHttpPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_HTTP_PROTO, $container->protect(function ($name, array $options) {
@@ -1504,11 +1288,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointGuardPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_GUARD_PROTO, $container->protect(function ($name, array $options) use ($container) {
@@ -1531,11 +1310,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationProviderPrototypes(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addAuthenticationProviderDaoPrototype($container);
@@ -1545,11 +1319,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationProviderDaoPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDER_DAO_PROTO, $container->protect(function ($name, $options) use ($container) {
@@ -1567,11 +1336,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationProviderGuardPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDER_GUARD_PROTO, $container->protect(function ($name, $options) use ($container) {
@@ -1593,11 +1357,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationProviderAnonymousPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDER_ANONYMOUS_PROTO, $container->protect(function ($name, $options) {
@@ -1609,11 +1368,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function boot(ContainerInterface $container): ContainerInterface
     {
         $this->addSubscriber($container);
@@ -1622,11 +1376,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return void
-     */
     protected function addSubscriber(ContainerInterface $container): void
     {
         $dispatcher = $this->getDispatcher($container);
@@ -1637,23 +1386,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
     protected function getDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
         return $container->get(static::SERVICE_DISPATCHER);
     }
 
-    /**
-     * @param string $method
-     * @param string $routeNameOrUrl
-     * @param string|null $routeName
-     *
-     * @return void
-     */
     protected function addSecurityRoute(string $method, string $routeNameOrUrl, ?string $routeName = null): void
     {
         $url = $this->buildUrl($routeNameOrUrl);
@@ -1662,11 +1399,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $this->securityRoutes[] = [$method, $url, $routeName];
     }
 
-    /**
-     * @param string $routeNameOrUrl
-     *
-     * @return string
-     */
     protected function buildUrl(string $routeNameOrUrl): string
     {
         if ($routeNameOrUrl[0] === '/') {
@@ -1676,12 +1408,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return '/' . str_replace('_', '/', ltrim($routeNameOrUrl, '/'));
     }
 
-    /**
-     * @param string $routeNameOrUrl
-     * @param string|null $routeName
-     *
-     * @return string
-     */
     protected function buildRouteName(string $routeNameOrUrl, ?string $routeName = null): string
     {
         if ($routeName) {
@@ -1691,11 +1417,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return str_replace('/', '_', ltrim($routeNameOrUrl, '/'));
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return void
-     */
     protected function addRouter(ContainerInterface $container): void
     {
         $loader = new ClosureLoader();
@@ -1757,9 +1478,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         return $this->authenticationListenerFactoryTypes;
     }
 
-    /**
-     * @return void
-     */
     protected function initializeAuthenticationListenerFactoryTypes(): void
     {
         $this->authenticationListenerFactoryTypes = static::DEFAULT_AUTHENTICATION_LISTENER_FACTORY_TYPES;

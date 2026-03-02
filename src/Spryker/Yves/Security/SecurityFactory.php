@@ -73,25 +73,16 @@ class SecurityFactory extends AbstractFactory
         return $this->getProvidedDependency(SecurityDependencyProvider::PLUGINS_SECURITY);
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
-     */
     public function createPasswordEncoder(): PasswordEncoderInterface
     {
         return new NativePasswordEncoder(null, null, $this->getConfig()->getBCryptCost());
     }
 
-    /**
-     * @return \Symfony\Component\PasswordHasher\PasswordHasherInterface
-     */
     public function createPasswordHasher(): PasswordHasherInterface
     {
         return new NativePasswordHasher(null, null, $this->getConfig()->getBCryptCost());
     }
 
-    /**
-     * @return \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface
-     */
     public function createSessionStrategy(): SessionAuthenticationStrategyInterface
     {
         return new SessionAuthenticationStrategy(SessionAuthenticationStrategy::MIGRATE);
@@ -105,17 +96,11 @@ class SecurityFactory extends AbstractFactory
         return $this->getProvidedDependency(SecurityDependencyProvider::PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER);
     }
 
-    /**
-     * @return \Spryker\Shared\Security\Configuration\SecurityConfiguration
-     */
     public function createSecurityConfiguration(): SecurityConfiguration
     {
         return new SecurityConfiguration();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\ServicesLoaderInterface
-     */
     public function createServicesLoader(): ServicesLoaderInterface
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
@@ -131,9 +116,6 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Booter\SecurityApplicationBooterInterface
-     */
     public function createSecurityApplicationBooter(): SecurityApplicationBooterInterface
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
@@ -150,9 +132,6 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Subscriber\SecurityDispatcherSubscriberInterface
-     */
     public function createSecurityDispatcherSubscriber(): SecurityDispatcherSubscriberInterface
     {
         return new SecurityDispatcherSubscriber(
@@ -160,9 +139,6 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Configurator\SecurityConfiguratorInterface
-     */
     public function createSecurityConfigurator(): SecurityConfiguratorInterface
     {
         return new SecurityConfigurator(
@@ -171,17 +147,11 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Router\SecurityRouterInterface
-     */
     public function getSecurityRouter(): SecurityRouterInterface
     {
         return $this->getProvidedDependency(SecurityDependencyProvider::SERVICE_SECURITY_ROUTERS);
     }
 
-    /**
-     * @return \Spryker\Yves\Security\AuthenticationListener\AuthenticationListenerInterface
-     */
     public function createAuthenticationListener(): AuthenticationListenerInterface
     {
         return new AuthenticationListener(
@@ -218,33 +188,21 @@ class SecurityFactory extends AbstractFactory
         ];
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthorizationCheckerServiceLoader(): ServiceLoaderInterface
     {
         return new AuthorizationCheckerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createTokenStorageServiceLoader(): ServiceLoaderInterface
     {
         return new TokenStorageServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createUserServiceLoader(): ServiceLoaderInterface
     {
         return new UserServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthenticationManagerServiceLoader(): ServiceLoaderInterface
     {
         return new AuthenticationManagerServiceLoader(
@@ -252,9 +210,6 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createEncoderServiceLoader(): ServiceLoaderInterface
     {
         return new EncoderServiceLoader(
@@ -262,25 +217,16 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createUserCheckerServiceLoader(): ServiceLoaderInterface
     {
         return new UserCheckerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createAccessManagerServiceLoader(): ServiceLoaderInterface
     {
         return new AccessManagerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createVotersServiceLoader(): ServiceLoaderInterface
     {
         return new VotersServiceLoader(
@@ -288,9 +234,6 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createFirewallServiceLoader(): ServiceLoaderInterface
     {
         return new FirewallServiceLoader(
@@ -299,9 +242,6 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createChannelListenerServiceLoader(): ServiceLoaderInterface
     {
         return new ChannelListenerServiceLoader(
@@ -309,9 +249,6 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthenticationListenerFactoriesServiceLoader(): ServiceLoaderInterface
     {
         return new AuthenticationListenerFactoriesServiceLoader(
@@ -319,17 +256,11 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createAccessListenerServiceLoader(): ServiceLoaderInterface
     {
         return new AccessListenerServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createAccessMapServiceLoader(): ServiceLoaderInterface
     {
         return new AccessMapServiceLoader(
@@ -337,49 +268,31 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createTrustResolverServiceLoader(): ServiceLoaderInterface
     {
         return new TrustResolverServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createUtilsServiceLoader(): ServiceLoaderInterface
     {
         return new UtilsServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createLastErrorServiceLoader(): ServiceLoaderInterface
     {
         return new LastErrorServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createUserProviderPrototypeServiceLoader(): ServiceLoaderInterface
     {
         return new UserProviderPrototypeServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createListenerPrototypeServiceLoader(): ServiceLoaderInterface
     {
         return new ListenerPrototypeServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createAuthenticationListenerPrototypesServiceLoader(): ServiceLoaderInterface
     {
         return new AuthenticationListenerPrototypesServiceLoader(
@@ -389,17 +302,11 @@ class SecurityFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\Services\ServiceLoaderInterface
-     */
     public function createEntryPointPrototypesServiceLoader(): ServiceLoaderInterface
     {
         return new EntryPointPrototypesServiceLoader();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Validator\UserPasswordValidatorConstraintInterface
-     */
     public function createUserPasswordValidatorConstraint(): UserPasswordValidatorConstraintInterface
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
@@ -409,9 +316,6 @@ class SecurityFactory extends AbstractFactory
         return new UserPasswordValidatorConstraint();
     }
 
-    /**
-     * @return \Spryker\Yves\Security\Loader\AuthenticatorManager\AuthenticatorManagerInterface
-     */
     public function createAuthenticatorManager(): AuthenticatorManagerInterface
     {
         return new AuthenticatorManager();

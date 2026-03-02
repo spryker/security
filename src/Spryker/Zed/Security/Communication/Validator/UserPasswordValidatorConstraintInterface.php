@@ -12,10 +12,5 @@ use Symfony\Component\Validator\ConstraintValidatorInterface;
 
 interface UserPasswordValidatorConstraintInterface
 {
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Validator\ConstraintValidatorInterface
-     */
     public function getConstraintInstance(ContainerInterface $container): ConstraintValidatorInterface;
 }

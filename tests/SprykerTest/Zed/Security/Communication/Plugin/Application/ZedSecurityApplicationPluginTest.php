@@ -131,9 +131,6 @@ class ZedSecurityApplicationPluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -143,9 +140,6 @@ class ZedSecurityApplicationPluginTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testProvideAddsAllServices(): void
     {
         // Arrange
@@ -184,9 +178,6 @@ class ZedSecurityApplicationPluginTest extends Unit
         $this->tester->getKernel()->handle(Request::create(static::HOMEPAGE_PATH));
     }
 
-    /**
-     * @return void
-     */
     public function testFormAuthentication(): void
     {
         //Arrange
@@ -215,9 +206,6 @@ class ZedSecurityApplicationPluginTest extends Unit
         $this->assertSame('http://localhost/', $httpKernelBrowser->getResponse()->getTargetUrl());
     }
 
-    /**
-     * @return void
-     */
     public function testHttpAuthentication(): void
     {
         //Arrange
@@ -237,9 +225,6 @@ class ZedSecurityApplicationPluginTest extends Unit
         $this->assertSame('userAUTHENTICATEDUSER', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     protected function addFormAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -306,9 +291,6 @@ class ZedSecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function addHttpAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -347,9 +329,6 @@ class ZedSecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function tearDown(): void
     {
         parent::tearDown();

@@ -11,19 +11,8 @@ use Spryker\Service\Container\ContainerInterface;
 
 interface SecurityRouterInterface
 {
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return void
-     */
     public function addRouter(ContainerInterface $container): void;
 
-    /**
-     * @param string $routeNameOrUrl
-     * @param string|null $routeName
-     *
-     * @return void
-     */
     public function addSecurityRoute(
         string $routeNameOrUrl,
         ?string $routeName = null

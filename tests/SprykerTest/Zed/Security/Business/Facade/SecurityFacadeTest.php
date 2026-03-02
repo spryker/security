@@ -39,9 +39,6 @@ class SecurityFacadeTest extends Unit
      */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         parent::_before();
@@ -53,9 +50,6 @@ class SecurityFacadeTest extends Unit
         $this->tester->enableSecurityApplicationPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testIsUserLoggedInReturnsFalseForAuthenticatedUser(): void
     {
         // Arrange
@@ -71,9 +65,6 @@ class SecurityFacadeTest extends Unit
         $this->assertFalse($isUserLoggedIn);
     }
 
-    /**
-     * @return void
-     */
     public function testIsUserLoggedInReturnsTrueForAuthenticatedUser(): void
     {
         // Arrange
@@ -89,9 +80,6 @@ class SecurityFacadeTest extends Unit
         $this->assertTrue($isUserLoggedIn);
     }
 
-    /**
-     * @return void
-     */
     protected function addAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -115,9 +103,6 @@ class SecurityFacadeTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function mockDependencies(): void
     {
         $container = $this->tester->getContainer();
@@ -127,9 +112,6 @@ class SecurityFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
-     */
     protected function getAuthorizationChecker(): AuthorizationCheckerInterface
     {
         $container = $this->tester->getContainer();

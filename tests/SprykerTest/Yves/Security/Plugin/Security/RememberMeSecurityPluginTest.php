@@ -47,9 +47,6 @@ class RememberMeSecurityPluginTest extends Unit
      */
     public $interactiveLoginTriggered = false;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -61,9 +58,6 @@ class RememberMeSecurityPluginTest extends Unit
         $this->interactiveLoginTriggered = false;
     }
 
-    /**
-     * @return void
-     */
     public function testRememberMeAuthentication(): void
     {
         $this->addAuthentication();
@@ -90,9 +84,6 @@ class RememberMeSecurityPluginTest extends Unit
         $this->assertNull($httpKernelBrowser->getCookiejar()->get('REMEMBERME'), 'The REMEMBERME cookie has not been removed yet');
     }
 
-    /**
-     * @return void
-     */
     protected function addAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -122,9 +113,6 @@ class RememberMeSecurityPluginTest extends Unit
         });
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
-     */
     protected function getAuthorizationChecker(): AuthorizationCheckerInterface
     {
         $container = $this->tester->getContainer();
@@ -132,19 +120,11 @@ class RememberMeSecurityPluginTest extends Unit
         return $container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
     }
 
-    /**
-     * @return void
-     */
     protected function onInteractiveLogin(): void
     {
         $this->interactiveLoginTriggered = true;
     }
 
-    /**
-     * @param \SprykerTest\Yves\Security\Plugin\Security\RememberMeSecurityPluginTest $testClass
-     *
-     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface
-     */
     protected function getEventDispatcherPlugin(RememberMeSecurityPluginTest $testClass): EventDispatcherPluginInterface
     {
         return new class ($testClass) implements EventDispatcherPluginInterface
@@ -154,20 +134,11 @@ class RememberMeSecurityPluginTest extends Unit
              */
             protected $testClass;
 
-            /**
-             * @param \SprykerTest\Yves\Security\Plugin\Security\RememberMeSecurityPluginTest $testClass
-             */
             public function __construct(RememberMeSecurityPluginTest $testClass)
             {
                 $this->testClass = $testClass;
             }
 
-            /**
-             * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-             * @param \Spryker\Service\Container\ContainerInterface $container
-             *
-             * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-             */
             public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
             {
                 $eventDispatcher->addListener(SecurityEvents::INTERACTIVE_LOGIN, function (): void {

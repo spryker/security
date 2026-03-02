@@ -50,9 +50,6 @@ class SecurityConfigurationTest extends Unit
      */
     protected const TEST_FIREWALL_CONFIGURATION_3 = 'test_3';
 
-    /**
-     * @return void
-     */
     public function testAddFirewallAddsAFirewallConfiguration(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -62,9 +59,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertArrayHasKey(static::FIREWALL_MAIN, $securityConfiguration->getFirewalls());
     }
 
-    /**
-     * @return void
-     */
     public function testAddFirewallAddsMultipleFirewallConfigurations(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -75,9 +69,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(2, $securityConfiguration->getFirewalls());
     }
 
-    /**
-     * @return void
-     */
     public function testMergeFirewallWillMergeRecursiveIfAFirewallIsAlreadyConfigured(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -92,9 +83,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertSame(['foo' => 'bar', 'zip' => 'zap', 'trip' => 'trap'], $firewalls[static::FIREWALL_MAIN]);
     }
 
-    /**
-     * @return void
-     */
     public function testMergeFirewallWhichIsNotConfiguredWillThrowAnException(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -104,9 +92,6 @@ class SecurityConfigurationTest extends Unit
         $securityConfiguration->getConfiguration();
     }
 
-    /**
-     * @return void
-     */
     public function testMergeFirewallShouldNotRemoveAlreadyAddedConfiguration(): void
     {
         // Arrange
@@ -134,9 +119,6 @@ class SecurityConfigurationTest extends Unit
         ], $firewalls[static::FIREWALL_MAIN]);
     }
 
-    /**
-     * @return void
-     */
     public function testAddAccessRulesAddsAAccessRule(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -146,9 +128,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(1, $securityConfiguration->getAccessRules());
     }
 
-    /**
-     * @return void
-     */
     public function testAddRoleHierarchyAddsARoleHierarchy(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -158,9 +137,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(1, $securityConfiguration->getRoleHierarchies());
     }
 
-    /**
-     * @return void
-     */
     public function testAddAuthenticationSuccessHandlerAddsAAuthenticationFailureHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -171,9 +147,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(1, $securityConfiguration->getAuthenticationSuccessHandlers());
     }
 
-    /**
-     * @return void
-     */
     public function testAddAuthenticationFailureHandlerAddsAAuthenticationFailureHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -184,9 +157,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(1, $securityConfiguration->getAuthenticationFailureHandlers());
     }
 
-    /**
-     * @return void
-     */
     public function testAddLogoutHandlerAddsALogoutHandlerBeforeSymfonySecurity51(): void
     {
         if (class_exists(LogoutEvent::class)) {
@@ -200,9 +170,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(1, $securityConfiguration->getLogoutHandlers());
     }
 
-    /**
-     * @return void
-     */
     public function testAddLogoutHandlerThrowsExceptionWhenSymfonySecurity51IsInstalled(): void
     {
         if (class_exists(LogoutEvent::class)) {
@@ -216,9 +183,6 @@ class SecurityConfigurationTest extends Unit
         $this->markTestSkipped('Test will only be executed when symfony/security-core <= 5.1 is installed.');
     }
 
-    /**
-     * @return void
-     */
     public function testAddAccessDeniedHandlerAddsAAccessDeniedHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -229,9 +193,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(1, $securityConfiguration->getAccessDeniedHandlers());
     }
 
-    /**
-     * @return void
-     */
     public function testAddEventSubscriberAddsAEventSubscriber(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -242,9 +203,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertCount(1, $securityConfiguration->getEventSubscribers());
     }
 
-    /**
-     * @return void
-     */
     public function testGetConfigurationOnAFrozenConfigurationWillThrowAnException(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -255,9 +213,6 @@ class SecurityConfigurationTest extends Unit
         $securityConfiguration->getConfiguration();
     }
 
-    /**
-     * @return void
-     */
     public function testUsingAGetterOnANotFrozenConfigurationWillThrowAnException(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -266,9 +221,6 @@ class SecurityConfigurationTest extends Unit
         $securityConfiguration->getFirewalls();
     }
 
-    /**
-     * @return void
-     */
     public function testMergeFirewallWithComplexNestedArraysPreventArrayToStringConversion(): void
     {
         // Arrange
@@ -311,9 +263,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertSame($expectedFirewallConfig, $firewalls[static::FIREWALL_MAIN]);
     }
 
-    /**
-     * @return void
-     */
     public function testMergeFirewallReplacesStringValuesInsteadOfMerging(): void
     {
         // Arrange
@@ -342,9 +291,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertSame($expectedConfig, $firewalls[static::FIREWALL_MAIN]);
     }
 
-    /**
-     * @return void
-     */
     public function testMultipleMergeFirewallCallsPreventArrayAccumulation(): void
     {
         // Arrange
@@ -378,9 +324,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertSame($expectedConfig, $firewalls[static::FIREWALL_MAIN]);
     }
 
-    /**
-     * @return void
-     */
     public function testMergeFirewallWithMixedArrayTypes(): void
     {
         // Arrange
@@ -417,9 +360,6 @@ class SecurityConfigurationTest extends Unit
         $this->assertSame($expectedConfig, $firewalls[static::FIREWALL_MAIN]);
     }
 
-    /**
-     * @return void
-     */
     public function testMergeFirewallWithEmptyArrays(): void
     {
         // Arrange

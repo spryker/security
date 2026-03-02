@@ -66,11 +66,6 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
         'token',
     ];
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addEntryPointFormPrototype($container);
@@ -79,11 +74,6 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointFormPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): callable {
@@ -106,11 +96,6 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointHttpPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_HTTP_PROTO, $container->protect(function ($firewallName, array $options) use ($container): AuthenticatorInterface {

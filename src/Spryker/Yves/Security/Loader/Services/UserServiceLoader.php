@@ -22,11 +22,6 @@ class UserServiceLoader implements ServiceLoaderInterface
      */
     protected const SERVICE_USER = 'user';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_USER, $container->factory(function (ContainerInterface $container): ?UserInterface {

@@ -52,11 +52,6 @@ class ListenerPrototypeServiceLoader implements ServiceLoaderInterface
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addServiceSecurityContextListenerProto($container);
@@ -65,11 +60,6 @@ class ListenerPrototypeServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addServiceSecurityContextListenerProto(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_CONTEXT_LISTENER_PROTO, $container->protect(function (string $firewallName, array $userProviders) use ($container): callable {
@@ -87,11 +77,6 @@ class ListenerPrototypeServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addServiceSecurityExceptionListenerProto(ContainerInterface $container): ContainerInterface
     {
         $container->set(

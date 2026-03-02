@@ -23,17 +23,11 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
      */
     protected $authorizationChecker;
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
-     */
     public function __construct(SymfonyAuthorizationCheckerInterface $authorizationChecker)
     {
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * @return bool
-     */
     public function isUserLoggedIn(): bool
     {
         return $this->authorizationChecker->isGranted(static::IS_AUTHENTICATED_FULLY);

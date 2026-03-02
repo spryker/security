@@ -40,11 +40,6 @@ class SecurityConfigurator implements SecurityConfiguratorInterface
         $this->securityPlugins = $securityPlugins;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
-     */
     public function getSecurityConfiguration(ContainerInterface $container): SecurityConfigurationInterface
     {
         if (static::$securityConfiguration === null) {
@@ -54,11 +49,6 @@ class SecurityConfigurator implements SecurityConfiguratorInterface
         return static::$securityConfiguration;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
-     */
     protected function getSecurityConfigurationFromPlugins(ContainerInterface $container): SecurityConfigurationInterface
     {
         $sharedSecurityConfiguration = $this->sharedSecurityConfiguration;

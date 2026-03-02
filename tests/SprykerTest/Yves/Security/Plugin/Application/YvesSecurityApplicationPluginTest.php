@@ -126,9 +126,6 @@ class YvesSecurityApplicationPluginTest extends Unit
      */
     protected $securityApplicationPlugin;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -138,9 +135,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testProvideAddsAllServices(): void
     {
         //Arrange
@@ -179,9 +173,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         $this->tester->getKernel()->handle(Request::create('/'));
     }
 
-    /**
-     * @return void
-     */
     public function testFormAuthentication(): void
     {
         //Arrange
@@ -239,9 +230,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         $this->assertSame(static::ADMIN, $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testFormAuthenticationThrowsExceptionOnRestrictedAction(): void
     {
         // Arrange
@@ -257,9 +245,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->request('get', '/admin');
     }
 
-    /**
-     * @return void
-     */
     public function testHttpAuthentication(): void
     {
         //Arrange
@@ -281,9 +266,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         $this->assertSame(static::ADMIN, $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testHttpAuthenticationThrowsExceptionOnRestrictedAction(): void
     {
         // Arrange
@@ -299,9 +281,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->request('get', '/admin');
     }
 
-    /**
-     * @return void
-     */
     protected function addFormAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -370,9 +349,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function addHttpAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -419,9 +395,6 @@ class YvesSecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function tearDown(): void
     {
         parent::tearDown();

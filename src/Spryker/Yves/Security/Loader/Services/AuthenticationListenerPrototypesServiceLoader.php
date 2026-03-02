@@ -218,11 +218,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
      */
     protected AuthenticatorManagerInterface $authenticatorManager;
 
-    /**
-     * @param \Spryker\Yves\Security\Configurator\SecurityConfiguratorInterface $securityConfigurator
-     * @param \Spryker\Yves\Security\Router\SecurityRouterInterface $securityRouter
-     * @param \Spryker\Yves\Security\Loader\AuthenticatorManager\AuthenticatorManagerInterface $authenticatorManager
-     */
     public function __construct(
         SecurityConfiguratorInterface $securityConfigurator,
         SecurityRouterInterface $securityRouter,
@@ -233,11 +228,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         $this->authenticatorManager = $authenticatorManager;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addAuthenticationListenerFormPrototype($container);
@@ -249,11 +239,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerFormPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): callable {
@@ -280,11 +265,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerHttpPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_HTTP_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): callable {
@@ -304,11 +284,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerSwitchUserPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_SWITCH_USER_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): callable {
@@ -331,11 +306,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerLogoutPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): callable {
@@ -371,11 +341,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addCustomerSessionValidatorListenerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(
@@ -421,11 +386,6 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         return !empty($options[static::KEY_WITH_CSRF]) && $container->has(static::SERVICE_FORM_CSRF_PROVIDER) ? $container->get(static::SERVICE_FORM_CSRF_PROVIDER) : null;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
     protected function getDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
         return $container->get(static::SERVICE_DISPATCHER);

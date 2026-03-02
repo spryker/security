@@ -9,8 +9,5 @@ namespace Spryker\Zed\Security\Business\Security;
 
 interface AuthorizationCheckerInterface
 {
-    /**
-     * @return bool
-     */
     public function isUserLoggedIn(): bool;
 }

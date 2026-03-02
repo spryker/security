@@ -53,11 +53,6 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
      */
     protected const URI_LOGIN = '/login';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addEntryPointFormPrototype($container);
@@ -66,11 +61,6 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointFormPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): callable {
@@ -91,11 +81,6 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addEntryPointHttpPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_HTTP_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): AuthenticatorInterface {
@@ -108,11 +93,6 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param string $firewallName
-     *
-     * @return string
-     */
     protected function getLoginFormAuthenticatorName(string $firewallName): string
     {
         return sprintf('security.%s.login_form.authenticator', $firewallName);

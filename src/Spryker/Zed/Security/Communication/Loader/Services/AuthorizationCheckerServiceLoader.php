@@ -28,11 +28,6 @@ class AuthorizationCheckerServiceLoader implements ServiceLoaderInterface
      */
     protected const SERVICE_SECURITY_ACCESS_MANAGER = 'security.access_manager';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (ContainerInterface $container): AuthorizationCheckerInterface {

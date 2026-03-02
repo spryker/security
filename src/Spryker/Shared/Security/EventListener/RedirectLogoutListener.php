@@ -34,12 +34,6 @@ class RedirectLogoutListener implements EventSubscriberInterface
      */
     public static $priority;
 
-    /**
-     * @param \Symfony\Component\Security\Http\HttpUtils $httpUtils
-     * @param \Symfony\Component\HttpFoundation\RequestMatcherInterface $requestMatcher
-     * @param string $targetUrl
-     * @param int $priority
-     */
     public function __construct(
         HttpUtils $httpUtils,
         RequestMatcherInterface $requestMatcher,
@@ -53,11 +47,6 @@ class RedirectLogoutListener implements EventSubscriberInterface
         static::$priority = $priority;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Http\Event\LogoutEvent $event
-     *
-     * @return void
-     */
     public function onLogout(LogoutEvent $event): void
     {
         $request = $event->getRequest();
@@ -73,9 +62,6 @@ class RedirectLogoutListener implements EventSubscriberInterface
         $event->setResponse($this->httpUtils->createRedirectResponse($request, $this->targetUrl));
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [

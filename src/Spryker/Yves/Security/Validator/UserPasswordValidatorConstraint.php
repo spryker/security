@@ -25,31 +25,16 @@ class UserPasswordValidatorConstraint implements UserPasswordValidatorConstraint
      */
     protected const SERVICE_SECURITY_HASHER_FACTORY = 'security.hasher_factory';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Validator\ConstraintValidatorInterface
-     */
     public function getConstraintInstance(ContainerInterface $container): ConstraintValidatorInterface
     {
         return new UserPasswordValidator($this->getTokenStorage($container), $this->getHasherStorage($container));
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
     protected function getTokenStorage(ContainerInterface $container): TokenStorageInterface
     {
         return $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface
-     */
     protected function getHasherStorage(ContainerInterface $container): PasswordHasherFactoryInterface
     {
         return $container->get(static::SERVICE_SECURITY_HASHER_FACTORY);

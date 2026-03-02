@@ -18,11 +18,6 @@ class UserCheckerServiceLoader implements ServiceLoaderInterface
      */
     protected const SERVICE_SECURITY_USER_CHECKER = 'security.user_checker';
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_USER_CHECKER, function (): UserCheckerInterface {

@@ -67,12 +67,6 @@ class DefaultAuthenticator implements AuthenticatorInterface, AuthenticationEntr
      */
     protected const USER_IDENTIFIER = 'user';
 
-    /**
-     * @param \Symfony\Component\Security\Http\Authenticator\Passport\Passport $passport
-     * @param string $firewallName
-     *
-     * @return \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
-     */
     public function createToken(Passport $passport, string $firewallName): TokenInterface
     {
         return new PostAuthenticationToken(
@@ -82,11 +76,6 @@ class DefaultAuthenticator implements AuthenticatorInterface, AuthenticationEntr
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\Security\Http\Authenticator\Passport\Passport
-     */
     public function authenticate(Request $request): Passport
     {
         $data = $request->request->all(static::PARAMETER_LOGIN_FORM);
@@ -104,23 +93,11 @@ class DefaultAuthenticator implements AuthenticatorInterface, AuthenticationEntr
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool|null
-     */
     public function supports(Request $request): ?bool
     {
         return $request->request->has(static::PARAMETER_LOGIN_FORM);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @param string $firewallName
-     *
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         if ($token->getUserIdentifier() === static::USER_IDENTIFIER) {

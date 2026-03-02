@@ -179,10 +179,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
      */
     protected AuthenticationListenerInterface $authenticationListener;
 
-    /**
-     * @param \Spryker\Yves\Security\Configurator\SecurityConfiguratorInterface $securityConfigurator
-     * @param \Spryker\Yves\Security\AuthenticationListener\AuthenticationListenerInterface $authenticationListener
-     */
     public function __construct(
         SecurityConfiguratorInterface $securityConfigurator,
         AuthenticationListenerInterface $authenticationListener
@@ -191,11 +187,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         $this->authenticationListener = $authenticationListener;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_FIREWALL, function (ContainerInterface $container): EventSubscriberInterface {
@@ -438,13 +429,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param string $firewallName
-     * @param string|null $entryPoint
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function setFirewallExceptionListener(
         string $firewallName,
         ?string $entryPoint,
@@ -469,12 +453,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param array $configs
-     *
-     * @return \Symfony\Component\Security\Http\FirewallMapInterface
-     */
     protected function buildFirewallMap(ContainerInterface $container, array $configs): FirewallMapInterface
     {
         $firewallMap = new FirewallMap();
@@ -496,12 +474,6 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         return $firewallMap;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param array $listeners
-     *
-     * @return array
-     */
     protected function mapListeners(ContainerInterface $container, array $listeners): array
     {
         $mappedListeners = array_map(function (string $listenerId) use ($container) {

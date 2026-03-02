@@ -26,19 +26,11 @@ class AccessMapServiceLoader implements ServiceLoaderInterface
      */
     protected SecurityConfiguratorInterface $securityConfigurator;
 
-    /**
-     * @param \Spryker\Yves\Security\Configurator\SecurityConfiguratorInterface $securityConfigurator
-     */
     public function __construct(SecurityConfiguratorInterface $securityConfigurator)
     {
         $this->securityConfigurator = $securityConfigurator;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_ACCESS_MAP, function (ContainerInterface $container): AccessMapInterface {

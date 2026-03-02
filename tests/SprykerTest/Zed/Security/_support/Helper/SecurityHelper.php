@@ -47,9 +47,6 @@ class SecurityHelper extends Module
      */
     protected $securityPlugins = [];
 
-    /**
-     * @return void
-     */
     public function enableSecurityApplicationPlugin(): void
     {
         $this->getApplicationHelper()->addApplicationPlugin(
@@ -110,9 +107,6 @@ class SecurityHelper extends Module
         return $this;
     }
 
-    /**
-     * @return void
-     */
     public function mockSecurityDependencies(): void
     {
         $this->getDependencyProviderHelper()->setDependency(
@@ -134,11 +128,6 @@ class SecurityHelper extends Module
         return $this;
     }
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
     public function _after(TestInterface $test): void
     {
         $this->securityPlugins = [];
@@ -162,9 +151,6 @@ class SecurityHelper extends Module
         return $securityApplicationPlugin;
     }
 
-    /**
-     * @return \Spryker\Zed\Security\SecurityConfig
-     */
     protected function getConfig(): SecurityConfig
     {
         /** @var \Spryker\Zed\Security\SecurityConfig $securityConfig */
@@ -173,9 +159,6 @@ class SecurityHelper extends Module
         return $securityConfig;
     }
 
-    /**
-     * @return \Spryker\Zed\Security\Communication\SecurityCommunicationFactory
-     */
     protected function getFactory(): SecurityCommunicationFactory
     {
         /** @var \Spryker\Zed\Security\Communication\SecurityCommunicationFactory $securityFactory */
@@ -184,12 +167,6 @@ class SecurityHelper extends Module
         return $securityFactory;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface $securityConfiguration
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addFirewalls(SecurityBuilderInterface $securityBuilder, SecurityConfigurationInterface $securityConfiguration): SecurityBuilderInterface
     {
         foreach ($securityConfiguration->getFirewalls() as $firewallName => $firewallConfiguration) {
@@ -199,12 +176,6 @@ class SecurityHelper extends Module
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface $securityConfiguration
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addAccessRules(
         SecurityBuilderInterface $securityBuilder,
         SecurityConfigurationInterface $securityConfiguration
@@ -216,12 +187,6 @@ class SecurityHelper extends Module
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface $securityConfiguration
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addRoleHierarchy(
         SecurityBuilderInterface $securityBuilder,
         SecurityConfigurationInterface $securityConfiguration
@@ -234,12 +199,6 @@ class SecurityHelper extends Module
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface $securityConfiguration
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addAccessDeniedHandler(
         SecurityBuilderInterface $securityBuilder,
         SecurityConfigurationInterface $securityConfiguration
@@ -251,12 +210,6 @@ class SecurityHelper extends Module
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface $securityConfiguration
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addAuthenticationSuccessHandler(
         SecurityBuilderInterface $securityBuilder,
         SecurityConfigurationInterface $securityConfiguration
@@ -268,12 +221,6 @@ class SecurityHelper extends Module
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface $securityConfiguration
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
-     */
     protected function addAuthenticationFailureHandler(
         SecurityBuilderInterface $securityBuilder,
         SecurityConfigurationInterface $securityConfiguration

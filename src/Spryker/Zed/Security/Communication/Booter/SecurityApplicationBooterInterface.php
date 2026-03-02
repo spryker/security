@@ -11,10 +11,5 @@ use Spryker\Service\Container\ContainerInterface;
 
 interface SecurityApplicationBooterInterface
 {
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     public function boot(ContainerInterface $container): ContainerInterface;
 }

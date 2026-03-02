@@ -33,11 +33,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const SECURITY_ROUTERS = 'SECURITY_ROUTERS';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -48,11 +43,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -62,11 +52,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSecurityPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SECURITY, function () {
@@ -76,11 +61,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addAuthorizationCheckerService(Container $container): Container
     {
         $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (Container $container) {
@@ -98,11 +78,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSecurityRouter(Container $container): Container
     {
         $container->set(static::SECURITY_ROUTERS, function () {

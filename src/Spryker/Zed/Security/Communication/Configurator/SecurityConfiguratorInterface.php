@@ -12,10 +12,5 @@ use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterfac
 
 interface SecurityConfiguratorInterface
 {
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
-     */
     public function getSecurityConfiguration(ContainerInterface $container): SecurityConfigurationInterface;
 }

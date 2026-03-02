@@ -11,10 +11,5 @@ use Spryker\Service\Container\ContainerInterface;
 
 interface SecurityDispatcherSubscriberInterface
 {
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return void
-     */
     public function addSubscriber(ContainerInterface $container): void;
 }

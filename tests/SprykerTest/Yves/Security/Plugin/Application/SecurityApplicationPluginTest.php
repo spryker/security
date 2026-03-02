@@ -66,9 +66,6 @@ class SecurityApplicationPluginTest extends Unit
      */
     protected $securityApplicationPlugin;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -78,9 +75,6 @@ class SecurityApplicationPluginTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testProvideAddsAllServices(): void
     {
         $container = $this->tester->getContainer();
@@ -111,9 +105,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->tester->getKernel()->handle(Request::create('/'));
     }
 
-    /**
-     * @return void
-     */
     public function testFormAuthentication(): void
     {
         $this->addFormAuthentication();
@@ -163,9 +154,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('admin', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testFormAuthenticationThrowsExceptionOnRestrictedAction(): void
     {
         // Arrange
@@ -181,9 +169,6 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->request('get', '/admin');
     }
 
-    /**
-     * @return void
-     */
     public function testHttpAuthentication(): void
     {
         $this->addHttpAuthentication();
@@ -209,9 +194,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('admin', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testHttpAuthenticationThrowsExceptionOnRestrictedAction(): void
     {
         // Arrange
@@ -227,9 +209,6 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->request('get', '/admin');
     }
 
-    /**
-     * @return void
-     */
     public function testGuardAuthentication(): void
     {
         $this->addGuardAuthentication();
@@ -278,9 +257,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     protected function addSwitchUserAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -327,9 +303,6 @@ class SecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     public function testWithOwnAuthenticationSuccessHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -344,12 +317,6 @@ class SecurityApplicationPluginTest extends Unit
         $securityConfiguration->addAuthenticationSuccessHandler('default', function () {
             return new class implements AuthenticationSuccessHandlerInterface
             {
-                /**
-                 * @param \Symfony\Component\HttpFoundation\Request $request
-                 * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-                 *
-                 * @return \Symfony\Component\HttpFoundation\Response
-                 */
                 public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
                 {
                     return new Response('authentication success');
@@ -386,12 +353,6 @@ class SecurityApplicationPluginTest extends Unit
         $securityConfiguration->addAuthenticationFailureHandler('default', function () {
             return new class implements AuthenticationFailureHandlerInterface
             {
-                /**
-                 * @param \Symfony\Component\HttpFoundation\Request $request
-                 * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-                 *
-                 * @return \Symfony\Component\HttpFoundation\Response
-                 */
                 public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
                 {
                     return new Response('authentication failure');
@@ -411,9 +372,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('authentication failure', $httpKernelBrowser->getResponse()->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testFirewallWithMethod(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -435,9 +393,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
     }
 
-    /**
-     * @return void
-     */
     public function testFirewallWithHost(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -462,9 +417,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame(200, $httpKernelBrowser->getResponse()->getStatusCode());
     }
 
-    /**
-     * @return void
-     */
     public function testUser(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -494,9 +446,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('user', $container->get('user')->getUsername());
     }
 
-    /**
-     * @return void
-     */
     public function testUserAsServiceString(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -529,9 +478,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('user', $container->get('user')->getUsername());
     }
 
-    /**
-     * @return void
-     */
     public function testUserWithNoToken(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -549,9 +495,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertNull($this->tester->getContainer()->get('user'));
     }
 
-    /**
-     * @return void
-     */
     public function testUserWithInvalidUser(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -570,9 +513,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertNull($this->tester->getContainer()->get('user'));
     }
 
-    /**
-     * @return void
-     */
     public function testAccessRulePathArray(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -596,9 +536,6 @@ class SecurityApplicationPluginTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function testUserPasswordValidatorIsRegistered(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -621,9 +558,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertInstanceOf(UserPasswordValidator::class, $container->get('security.validator.user_password_validator'));
     }
 
-    /**
-     * @return void
-     */
     public function testExposedExceptions(): void
     {
         $container = $this->tester->getContainer();
@@ -646,9 +580,6 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->getRequest()->getSession()->save();
     }
 
-    /**
-     * @return void
-     */
     public function testLastErrorReturnSecurityAuthenticationError(): void
     {
         $container = $this->tester->getContainer();
@@ -662,9 +593,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('security error', $securityError);
     }
 
-    /**
-     * @return void
-     */
     public function testProvideShouldExecuteSecurityAuthenticationListenerFactoryTypeExpanderPluginStack(): void
     {
         // Arrange
@@ -691,9 +619,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertTrue($container->has(static::TEST_SECURITY_AUTHENTICATION_LISTENER_FACTORY));
     }
 
-    /**
-     * @return void
-     */
     protected function addFormAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -748,9 +673,6 @@ class SecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function addHttpAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -790,9 +712,6 @@ class SecurityApplicationPluginTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function addGuardAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();

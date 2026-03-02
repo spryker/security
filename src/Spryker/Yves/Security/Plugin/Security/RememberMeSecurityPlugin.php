@@ -56,11 +56,6 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
         return $securityBuilder;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerFactory(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.authentication_listener.factory.remember_me', $container->protect(function ($name, $options) use ($container) {
@@ -91,11 +86,6 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addPrototypes(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addRememberMeServicePrototype($container);
@@ -105,11 +95,6 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addRememberMeServicePrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.remember_me.service._proto', $container->protect(function ($providerKey, $options) use ($container) {
@@ -140,11 +125,6 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationListenerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.authentication_listener.remember_me._proto', $container->protect(function ($providerKey) use ($container) {
@@ -164,11 +144,6 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addAuthenticationProviderPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.authentication_provider.remember_me._proto', $container->protect(function ($name, $options) use ($container) {

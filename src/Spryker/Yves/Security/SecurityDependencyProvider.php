@@ -31,11 +31,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const SERVICE_SECURITY_ROUTERS = 'SECURITY_ROUTERS';
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -47,11 +42,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addSecurityPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SECURITY, function () {
@@ -69,11 +59,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addSecurityAuthenticationListenerFactoryTypeExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER, function () {
@@ -91,11 +76,6 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addSecurityRouter(Container $container): Container
     {
         $container->set(static::SERVICE_SECURITY_ROUTERS, function () {
