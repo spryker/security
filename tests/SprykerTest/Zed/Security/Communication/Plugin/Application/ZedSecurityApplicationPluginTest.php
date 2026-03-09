@@ -8,9 +8,9 @@
 namespace SprykerTest\Zed\Security\Communication\Plugin\Application;
 
 use Codeception\Test\Unit;
-use LogicException;
 use ReflectionClass;
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
+use Spryker\Shared\Security\Exception\AuthenticationEntryNotRegisteredException;
 use Spryker\Zed\Security\Communication\Configurator\SecurityConfigurator;
 use Spryker\Zed\Security\Communication\Plugin\Application\ZedSecurityApplicationPlugin;
 use SprykerTest\Zed\Security\Fixtures\DefaultAuthenticator;
@@ -89,7 +89,7 @@ class ZedSecurityApplicationPluginTest extends Unit
     /**
      * @var string
      */
-    protected const USER_ENCODED_PASSWORD = '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu';
+    protected const USER_ENCODED_PASSWORD = '$2y$04$5kJ3kQpVZkH.x7ydtxPqTu/tRUlrFPGuByNj4.UVE6uhfWpnVxaUq';
 
     /**
      * @var string
@@ -160,7 +160,7 @@ class ZedSecurityApplicationPluginTest extends Unit
     }
 
     /**
-     * @group testWrongAuthenticationType
+     * @group testZedWrongAuthenticationType
      *
      * @return void
      */
@@ -172,13 +172,12 @@ class ZedSecurityApplicationPluginTest extends Unit
             'foobar' => true,
             'users' => [],
         ]);
-        $this->tester->mockSecurityPlugin($securityConfiguration);
-
-        $this->tester->addRoute('homepage', static::HOMEPAGE_PATH, function (): void {
-        });
+        $this->tester->mockZedSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityDependencies();
+        $this->tester->enableSecurityApplicationPlugin();
 
         // Assert
-        $this->expectException(LogicException::class);
+        $this->expectException(AuthenticationEntryNotRegisteredException::class);
 
         // Act
         $this->tester->getKernel()->handle(Request::create(static::HOMEPAGE_PATH));

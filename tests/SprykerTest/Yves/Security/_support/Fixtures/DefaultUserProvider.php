@@ -18,11 +18,11 @@ class DefaultUserProvider implements UserProviderInterface
      */
     protected const USERS = [
         'user' => [
-            'password' => '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu',
+            'password' => '$2y$04$5kJ3kQpVZkH.x7ydtxPqTu/tRUlrFPGuByNj4.UVE6uhfWpnVxaUq',
             'roles' => ['ROLE_USER'],
         ],
         'admin' => [
-            'password' => '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu',
+            'password' => '$2y$04$5kJ3kQpVZkH.x7ydtxPqTu/tRUlrFPGuByNj4.UVE6uhfWpnVxaUq',
             'roles' => ['ROLE_ADMIN'],
         ],
     ];

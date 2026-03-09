@@ -8,9 +8,9 @@
 namespace SprykerTest\Yves\Security\Plugin\Application;
 
 use Codeception\Test\Unit;
-use LogicException;
 use ReflectionClass;
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
+use Spryker\Shared\Security\Exception\AuthenticationEntryNotRegisteredException;
 use Spryker\Yves\Security\Configurator\SecurityConfigurator;
 use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
 use SprykerTest\Yves\Security\Fixtures\DefaultAuthenticator;
@@ -99,7 +99,7 @@ class YvesSecurityApplicationPluginTest extends Unit
     /**
      * @var string
      */
-    protected const FAKE_PASSWORD = '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu';
+    protected const FAKE_PASSWORD = '$2y$04$5kJ3kQpVZkH.x7ydtxPqTu/tRUlrFPGuByNj4.UVE6uhfWpnVxaUq';
 
     /**
      * @var string
@@ -168,12 +168,11 @@ class YvesSecurityApplicationPluginTest extends Unit
             'users' => [],
         ]);
         $this->tester->mockYvesSecurityPlugin($securityConfiguration);
-
-        $this->tester->addRoute('homepage', '/', function (): void {
-        });
+        $this->tester->mockSecurityDependencies();
+        $this->tester->enableSecurityApplicationPlugin();
 
         //Assert
-        $this->expectException(LogicException::class);
+        $this->expectException(AuthenticationEntryNotRegisteredException::class);
 
         //Act
         $this->tester->getKernel()->handle(Request::create('/'));
