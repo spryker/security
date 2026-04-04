@@ -10,11 +10,13 @@ namespace SprykerTest\Yves\Security\Helper;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
+use ReflectionClass;
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
+use Spryker\Yves\Security\Configurator\SecurityConfigurator;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Security\RememberMeSecurityPlugin;
@@ -255,6 +257,15 @@ class SecurityHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->securityPlugins = [];
+        $this->resetSecurityConfigurator();
+    }
+
+    protected function resetSecurityConfigurator(): void
+    {
+        $reflection = new ReflectionClass(SecurityConfigurator::class);
+        $property = $reflection->getProperty('securityConfiguration');
+        $property->setAccessible(true);
+        $property->setValue(null);
     }
 
     /**
