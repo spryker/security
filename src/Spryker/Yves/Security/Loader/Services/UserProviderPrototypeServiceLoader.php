@@ -46,8 +46,10 @@ class UserProviderPrototypeServiceLoader implements ServiceLoaderInterface
 
                 /** @var string $name */
                 foreach ($params as $name => $user) {
-                    /** @var array<int, string> $roles */
-                    $roles = (array)$user[static::INDEX_USER_ROLES];
+                    $roles = array_values(array_map(
+                        static fn ($role): string => (string)$role,
+                        (array)$user[static::INDEX_USER_ROLES],
+                    ));
 
                     $users[$name] = [
                         static::KEY_USER_ROLES => $roles,
@@ -55,7 +57,7 @@ class UserProviderPrototypeServiceLoader implements ServiceLoaderInterface
                     ];
                 }
 
-                /** @var array<non-empty-array<string, mixed>> $users */
+                /** @var array<string, array{roles: list<string>, password: string}> $users */
                 return new InMemoryUserProvider($users);
             };
         }));
