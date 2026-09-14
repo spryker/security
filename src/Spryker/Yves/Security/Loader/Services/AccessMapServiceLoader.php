@@ -9,7 +9,13 @@ namespace Spryker\Yves\Security\Loader\Services;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Security\Configurator\SecurityConfiguratorInterface;
-use Symfony\Component\HttpFoundation\RequestMatcher;
+use Symfony\Component\HttpFoundation\ChainRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\AttributesRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\IpsRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\SchemeRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\Security\Http\AccessMap;
 use Symfony\Component\Security\Http\AccessMapInterface;
@@ -59,7 +65,7 @@ class AccessMapServiceLoader implements ServiceLoaderInterface
     {
         return [
             'string' => function (string $rule): RequestMatcherInterface {
-                return new RequestMatcher($rule);
+                return $this->buildRequestMatcher($rule);
             },
             'array' => function (array $rule): RequestMatcherInterface {
                 $rule += [
@@ -71,7 +77,7 @@ class AccessMapServiceLoader implements ServiceLoaderInterface
                     'schemes' => null,
                 ];
 
-                return new RequestMatcher(
+                return $this->buildRequestMatcher(
                     $rule['path'],
                     $rule['host'],
                     $rule['methods'],
@@ -81,5 +87,48 @@ class AccessMapServiceLoader implements ServiceLoaderInterface
                 );
             },
         ];
+    }
+
+    /**
+     * @param array<string>|string|null $methods
+     * @param array<string>|string|null $ips
+     * @param array<string, string>|null $attributes
+     * @param array<string>|string|null $schemes
+     */
+    protected function buildRequestMatcher(
+        ?string $path = null,
+        ?string $host = null,
+        array|string|null $methods = null,
+        array|string|null $ips = null,
+        ?array $attributes = null,
+        array|string|null $schemes = null
+    ): RequestMatcherInterface {
+        $matchers = [];
+
+        if ($path) {
+            $matchers[] = new PathRequestMatcher($path);
+        }
+
+        if ($host) {
+            $matchers[] = new HostRequestMatcher($host);
+        }
+
+        if ($methods) {
+            $matchers[] = new MethodRequestMatcher($methods);
+        }
+
+        if ($ips) {
+            $matchers[] = new IpsRequestMatcher($ips);
+        }
+
+        if ($attributes) {
+            $matchers[] = new AttributesRequestMatcher($attributes);
+        }
+
+        if ($schemes) {
+            $matchers[] = new SchemeRequestMatcher($schemes);
+        }
+
+        return new ChainRequestMatcher($matchers);
     }
 }

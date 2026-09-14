@@ -11,7 +11,11 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Security\Exception\AuthenticationEntryNotRegisteredException;
 use Spryker\Zed\Security\Communication\Configurator\SecurityConfiguratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RequestMatcher;
+use Symfony\Component\HttpFoundation\ChainRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\Security\Http\Firewall;
 use Symfony\Component\Security\Http\FirewallMap;
 use Symfony\Component\Security\Http\FirewallMapInterface;
@@ -448,7 +452,7 @@ class FirewallServiceLoader implements ServiceLoaderInterface
             $requestMatcher = $config[static::OPTION_PATTERN];
 
             if (is_string($requestMatcher)) {
-                $requestMatcher = new RequestMatcher(
+                $requestMatcher = $this->buildRequestMatcher(
                     $config[static::OPTION_PATTERN],
                     $config[static::OPTION_HOSTS],
                     $config[static::OPTION_METHODS],
@@ -463,6 +467,28 @@ class FirewallServiceLoader implements ServiceLoaderInterface
         }
 
         return $firewallMap;
+    }
+
+    /**
+     * @param array<string>|string|null $methods
+     */
+    protected function buildRequestMatcher(?string $path = null, ?string $host = null, array|string|null $methods = null): RequestMatcherInterface
+    {
+        $matchers = [];
+
+        if ($path) {
+            $matchers[] = new PathRequestMatcher($path);
+        }
+
+        if ($host) {
+            $matchers[] = new HostRequestMatcher($host);
+        }
+
+        if ($methods) {
+            $matchers[] = new MethodRequestMatcher($methods);
+        }
+
+        return new ChainRequestMatcher($matchers);
     }
 
     protected function mapListeners(ContainerInterface $container, array $listeners): array

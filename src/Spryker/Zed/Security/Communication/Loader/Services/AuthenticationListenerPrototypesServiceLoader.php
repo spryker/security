@@ -12,7 +12,11 @@ use Spryker\Shared\Security\EventListener\RedirectLogoutListener;
 use Spryker\Zed\Security\Communication\Configurator\SecurityConfiguratorInterface;
 use Spryker\Zed\Security\Communication\Loader\AuthenticatorManager\AuthenticatorManagerInterface;
 use Spryker\Zed\Security\Communication\Router\SecurityRouterInterface;
-use Symfony\Component\HttpFoundation\RequestMatcher;
+use Symfony\Component\HttpFoundation\ChainRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\EventListener\CheckCredentialsListener;
 use Symfony\Component\Security\Http\EventListener\SessionLogoutListener;
@@ -367,7 +371,7 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param string $firewallName
      *
-     * @return \Symfony\Component\HttpFoundation\RequestMatcher|mixed
+     * @return \Symfony\Component\HttpFoundation\RequestMatcherInterface|mixed
      */
     protected function createRequestMatcher(ContainerInterface $container, string $firewallName)
     {
@@ -375,7 +379,7 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         $requestMatcher = $config[static::OPTION_PATTERN];
 
         if (is_string($requestMatcher)) {
-            $requestMatcher = new RequestMatcher(
+            $requestMatcher = $this->buildRequestMatcher(
                 $config[static::OPTION_PATTERN],
                 $config[static::OPTION_HOSTS] ?? null,
                 $config[static::OPTION_METHODS] ?? null,
@@ -383,6 +387,28 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
         }
 
         return $requestMatcher;
+    }
+
+    /**
+     * @param array<string>|string|null $methods
+     */
+    protected function buildRequestMatcher(?string $path = null, ?string $host = null, array|string|null $methods = null): RequestMatcherInterface
+    {
+        $matchers = [];
+
+        if ($path) {
+            $matchers[] = new PathRequestMatcher($path);
+        }
+
+        if ($host) {
+            $matchers[] = new HostRequestMatcher($host);
+        }
+
+        if ($methods) {
+            $matchers[] = new MethodRequestMatcher($methods);
+        }
+
+        return new ChainRequestMatcher($matchers);
     }
 
     /**

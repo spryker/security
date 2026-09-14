@@ -11,6 +11,7 @@ use Exception;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider;
 use Symfony\Component\Security\Http\Firewall\RememberMeListener;
 use Symfony\Component\Security\Http\RememberMe\ResponseListener;
@@ -46,6 +47,13 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
      */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
+        if (class_exists(AuthenticationProviderManager::class) === false) {
+            trigger_error(
+                'Symfony 5 support (`symfony/security-core` ^5.0.0) has been dropped and `RememberMeSecurityPlugin` is no longer supported. Use `CustomerRememberMeSecurityPlugin` instead.',
+                E_USER_DEPRECATED,
+            );
+        }
+
         $this->addAuthenticationListenerFactory($container);
         $this->addPrototypes($container);
 

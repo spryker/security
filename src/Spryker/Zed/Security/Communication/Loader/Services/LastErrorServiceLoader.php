@@ -9,7 +9,7 @@ namespace Spryker\Zed\Security\Communication\Loader\Services;
 
 use Spryker\Service\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class LastErrorServiceLoader implements ServiceLoaderInterface
 {
@@ -21,8 +21,8 @@ class LastErrorServiceLoader implements ServiceLoaderInterface
     public function add(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_LAST_ERROR, $container->protect(function (Request $request): ?string {
-            if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
-                return $request->attributes->get(Security::AUTHENTICATION_ERROR)->getMessage();
+            if ($request->attributes->has(SecurityRequestAttributes::AUTHENTICATION_ERROR)) {
+                return $request->attributes->get(SecurityRequestAttributes::AUTHENTICATION_ERROR)->getMessage();
             }
 
             if (!$request->hasSession()) {
@@ -32,9 +32,9 @@ class LastErrorServiceLoader implements ServiceLoaderInterface
             /** @var \Symfony\Component\HttpFoundation\Session\SessionInterface $session */
             $session = $request->getSession();
 
-            if ($session->has(Security::AUTHENTICATION_ERROR)) {
-                $message = $session->get(Security::AUTHENTICATION_ERROR)->getMessage();
-                $session->remove(Security::AUTHENTICATION_ERROR);
+            if ($session->has(SecurityRequestAttributes::AUTHENTICATION_ERROR)) {
+                $message = $session->get(SecurityRequestAttributes::AUTHENTICATION_ERROR)->getMessage();
+                $session->remove(SecurityRequestAttributes::AUTHENTICATION_ERROR);
 
                 return $message;
             }

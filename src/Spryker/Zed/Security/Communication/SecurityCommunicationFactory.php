@@ -170,6 +170,11 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
             if ($this->securityApplicationPluginCache === null) {
+                trigger_error(
+                    'Symfony 5 support (`symfony/security-guard`) has been dropped and `SecurityApplicationPlugin` is no longer supported. On Symfony 6+ its services are wired automatically and this plugin is not used.',
+                    E_USER_DEPRECATED,
+                );
+
                 $this->securityApplicationPluginCache = new SecurityApplicationPlugin();
             }
 
@@ -323,6 +328,11 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
     public function createUserPasswordValidatorConstraint(): UserPasswordValidatorConstraintInterface
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
+            trigger_error(
+                'Symfony 5 support (`symfony/security-guard`) has been dropped and `UserPasswordValidatorConstraintPlugin` is no longer supported. Use `ZedUserPasswordValidatorConstraintPlugin` instead.',
+                E_USER_DEPRECATED,
+            );
+
             return new UserPasswordValidatorConstraintPlugin();
         }
 
@@ -333,6 +343,11 @@ class SecurityCommunicationFactory extends AbstractCommunicationFactory
     {
         if (class_exists(AuthenticationProviderManager::class) === true) {
             if ($this->securityApplicationPluginCache === null) {
+                trigger_error(
+                    'Symfony 5 support (`symfony/security-guard`) has been dropped and `SecurityApplicationPlugin` is no longer supported. On Symfony 6+ its services are wired automatically and this plugin is not used.',
+                    E_USER_DEPRECATED,
+                );
+
                 $this->securityApplicationPluginCache = new SecurityApplicationPlugin();
             }
 
