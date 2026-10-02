@@ -31,7 +31,9 @@
         "psr-4": {
             "Spryker\\": "src/Spryker/",
             "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/",
-            "SprykerTest\\Zed\\Security\\Helper\\": "tests/SprykerTest/Zed/Security/_support/Helper/"
+            "SprykerTest\\Zed\\Security\\Helper\\": "tests/SprykerTest/Zed/Security/_support/Helper/",
+            "SprykerTest\\Yves\\Security\\Fixtures\\": "tests/SprykerTest/Yves/Security/_support/Fixtures/",
+            "SprykerTest\\Zed\\Security\\Fixtures\\": "tests/SprykerTest/Zed/Security/_support/Fixtures/"
         }
     },
     "autoload-dev": {
