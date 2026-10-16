@@ -14,9 +14,12 @@ use Spryker\Shared\Security\Exception\AuthenticationEntryNotRegisteredException;
 use Spryker\Yves\Security\Configurator\SecurityConfigurator;
 use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
 use SprykerTest\Yves\Security\Fixtures\DefaultAuthenticator;
+use Symfony\Component\BrowserKit\AbstractBrowser;
+use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 /**
  * Auto-generated group annotations
@@ -115,6 +118,26 @@ class YvesSecurityApplicationPluginTest extends Unit
      * @var string
      */
     protected const DEFAULT_FIREWALL_NAME = 'default';
+
+    protected const string USER_NAME = 'user';
+
+    protected const string USER_PASSWORD = 'foo';
+
+    protected const string USER_INVALID_PASSWORD = 'bar';
+
+    protected const string ADMIN_NAME = 'admin';
+
+    protected const string PARAMETER_SWITCH_USER = '_switch_user';
+
+    protected const string SWITCH_USER_EXIT_VALUE = '_exit';
+
+    protected const int LOGIN_SUCCESS_SUBSCRIBER_PRIORITY = 1;
+
+    protected const string SERVICE_DISPATCHER = 'dispatcher';
+
+    protected const string CSRF_TOKEN_SESSION_KEY = '_csrf/test_form';
+
+    protected const string PLANTED_CSRF_TOKEN = 'planted-csrf-token';
 
     /**
      * @var \SprykerTest\Yves\Security\SecurityTester
@@ -229,6 +252,119 @@ class YvesSecurityApplicationPluginTest extends Unit
         $this->assertSame(static::ADMIN, $httpKernelBrowser->getResponse()->getContent());
     }
 
+    public function testFormAuthenticationRegeneratesSessionIdOnSuccessfulLogin(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $preLoginSessionId = $this->startSessionWithCookie($httpKernelBrowser);
+
+        // Act
+        $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['username' => static::USER_NAME, 'password' => static::USER_PASSWORD]]);
+
+        // Assert
+        $postLoginSessionId = $httpKernelBrowser->getRequest()->getSession()->getId();
+
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertNotSame($preLoginSessionId, $postLoginSessionId, 'Expected a new session id after a successful login.');
+
+        $httpKernelBrowser->request('get', '/');
+        $this->assertSame(static::USER_NAME . static::AUTHENTICATED, $httpKernelBrowser->getResponse()->getContent());
+    }
+
+    public function testFormAuthenticationKeepsSessionIdOnFailedLogin(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $preLoginSessionId = $this->startSessionWithCookie($httpKernelBrowser);
+
+        // Act
+        $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['username' => static::USER_NAME, 'password' => static::USER_INVALID_PASSWORD]]);
+
+        // Assert
+        $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame($preLoginSessionId, $httpKernelBrowser->getRequest()->getSession()->getId());
+    }
+
+    public function testLoginSuccessSubscribersReadTheNewSessionId(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $preLoginSessionId = $this->startSessionWithCookie($httpKernelBrowser);
+        $sessionIdSeenBySubscriber = null;
+        $this->tester->getContainer()->get(static::SERVICE_DISPATCHER)->addListener(
+            LoginSuccessEvent::class,
+            function (LoginSuccessEvent $loginSuccessEvent) use (&$sessionIdSeenBySubscriber): void {
+                $sessionIdSeenBySubscriber = $loginSuccessEvent->getRequest()->getSession()->getId();
+            },
+            static::LOGIN_SUCCESS_SUBSCRIBER_PRIORITY,
+        );
+
+        // Act
+        $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['username' => static::USER_NAME, 'password' => static::USER_PASSWORD]]);
+
+        // Assert
+        $this->assertNotSame($preLoginSessionId, $sessionIdSeenBySubscriber);
+        $this->assertSame($httpKernelBrowser->getRequest()->getSession()->getId(), $sessionIdSeenBySubscriber);
+    }
+
+    public function testFormAuthenticationClearsCsrfTokensOnSuccessfulLogin(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $this->startSessionWithCookie($httpKernelBrowser, [static::CSRF_TOKEN_SESSION_KEY => static::PLANTED_CSRF_TOKEN]);
+
+        // Act
+        $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['username' => static::USER_NAME, 'password' => static::USER_PASSWORD]]);
+
+        // Assert
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertFalse($httpKernelBrowser->getRequest()->getSession()->has(static::CSRF_TOKEN_SESSION_KEY), 'Expected the pre-login CSRF tokens to be removed after a successful login.');
+    }
+
+    /**
+     * On Yves the switch-user rotation belongs to SessionAgentValidation, which rotates the session and re-saves the
+     * agent session ID in one step. If Security rotated here as well, a project upgrading Security alone would keep a
+     * stale agent session ID and the agent would be logged out on every impersonation start.
+     */
+    public function testSwitchUserKeepsSessionIdOnImpersonationStart(): void
+    {
+        // Arrange
+        $httpKernelBrowser = $this->loginAsAdminWithSwitchUser();
+        $preSwitchSessionId = $httpKernelBrowser->getRequest()->getSession()->getId();
+
+        // Act
+        $httpKernelBrowser->request('get', '/', [static::PARAMETER_SWITCH_USER => static::USER_NAME]);
+
+        // Assert
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame($preSwitchSessionId, $httpKernelBrowser->getRequest()->getSession()->getId());
+
+        $httpKernelBrowser->request('get', '/');
+        $this->assertSame(static::USER_NAME . static::AUTHENTICATED, $httpKernelBrowser->getResponse()->getContent());
+    }
+
+    public function testSwitchUserKeepsSessionIdOnImpersonationEnd(): void
+    {
+        // Arrange
+        $httpKernelBrowser = $this->loginAsAdminWithSwitchUser();
+        $httpKernelBrowser->request('get', '/', [static::PARAMETER_SWITCH_USER => static::USER_NAME]);
+        $impersonationSessionId = $httpKernelBrowser->getRequest()->getSession()->getId();
+
+        // Act
+        $httpKernelBrowser->request('get', '/', [static::PARAMETER_SWITCH_USER => static::SWITCH_USER_EXIT_VALUE]);
+
+        // Assert
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame($impersonationSessionId, $httpKernelBrowser->getRequest()->getSession()->getId());
+
+        $httpKernelBrowser->request('get', '/');
+        $this->assertSame(static::ADMIN_NAME . static::AUTHENTICATED . static::ADMIN, $httpKernelBrowser->getResponse()->getContent());
+    }
+
     public function testFormAuthenticationThrowsExceptionOnRestrictedAction(): void
     {
         // Arrange
@@ -280,7 +416,10 @@ class YvesSecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->request('get', '/admin');
     }
 
-    protected function addFormAuthentication(): void
+    /**
+     * @param array<string, mixed> $additionalFirewallOptions
+     */
+    protected function addFormAuthentication(array $additionalFirewallOptions = []): void
     {
         $securityConfiguration = new SecurityConfiguration();
         $securityConfiguration
@@ -301,7 +440,7 @@ class YvesSecurityApplicationPluginTest extends Unit
                     'user' => [static::ROLE_USER, static::FAKE_PASSWORD],
                     'admin' => [static::ROLE_ADMIN, static::FAKE_PASSWORD],
                 ],
-            ])
+            ] + $additionalFirewallOptions)
             ->addAccessRules([['^/admin', static::ROLE_ADMIN]])
             ->addRoleHierarchy([static::ROLE_ADMIN => [static::ROLE_USER]]);
 
@@ -346,6 +485,40 @@ class YvesSecurityApplicationPluginTest extends Unit
         $this->tester->addRoute('admin', '/admin', function () {
             return new Response(static::ADMIN);
         });
+    }
+
+    protected function loginAsAdminWithSwitchUser(): AbstractBrowser
+    {
+        $this->addFormAuthentication([
+            'switch_user' => [
+                'parameter' => static::PARAMETER_SWITCH_USER,
+                'role' => static::ROLE_ADMIN,
+            ],
+        ]);
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $this->startSessionWithCookie($httpKernelBrowser);
+        $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['username' => static::ADMIN_NAME, 'password' => static::USER_PASSWORD]]);
+
+        return $httpKernelBrowser;
+    }
+
+    /**
+     * @param array<string, string> $sessionAttributes
+     */
+    protected function startSessionWithCookie(AbstractBrowser $httpKernelBrowser, array $sessionAttributes = []): string
+    {
+        $httpKernelBrowser->request('get', '/');
+        $session = $httpKernelBrowser->getRequest()->getSession();
+        $session->start();
+
+        foreach ($sessionAttributes as $name => $value) {
+            $session->set($name, $value);
+        }
+
+        $httpKernelBrowser->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
+        $session->save();
+
+        return $session->getId();
     }
 
     protected function addHttpAuthentication(): void
