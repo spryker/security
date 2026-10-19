@@ -270,7 +270,7 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
     protected function addAuthenticationListenerHttpPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_HTTP_PROTO, $container->protect(function (string $firewallName, array $options) use ($container): callable {
-            return function () use ($container, $firewallName, $options): FirewallListenerInterface {
+            return function () use ($container, $firewallName): FirewallListenerInterface {
                 $container->get(static::SERVICE_DISPATCHER)->addSubscriber(
                     new CheckCredentialsListener($container->get(static::SERVICE_SECURITY_HASHER_FACTORY)),
                 );
