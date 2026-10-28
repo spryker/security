@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Security\Http\EventListener\CheckCredentialsListener;
+use Symfony\Component\Security\Http\EventListener\CsrfProtectionListener;
 use Symfony\Component\Security\Http\EventListener\SessionLogoutListener;
 use Symfony\Component\Security\Http\Firewall\AuthenticatorManagerListener;
 use Symfony\Component\Security\Http\Firewall\FirewallListenerInterface;
@@ -252,6 +253,12 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
                 $this->getDispatcher($container)->addSubscriber(
                     new CheckCredentialsListener($container->get(static::SERVICE_SECURITY_HASHER_FACTORY)),
                 );
+
+                if ($container->has(static::SERVICE_FORM_CSRF_PROVIDER)) {
+                    $this->getDispatcher($container)->addSubscriber(
+                        new CsrfProtectionListener($container->get(static::SERVICE_FORM_CSRF_PROVIDER)),
+                    );
+                }
 
                 /** @var \Symfony\Component\Security\Http\Firewall\FirewallListenerInterface $class */
                 $class = $options[static::OPTION_LISTENER_CLASS] ?? AuthenticatorManagerListener::class;

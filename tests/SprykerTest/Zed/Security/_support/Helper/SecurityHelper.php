@@ -20,13 +20,19 @@ use Spryker\Zed\Security\Communication\Router\SecurityRouter;
 use Spryker\Zed\Security\Communication\SecurityCommunicationFactory;
 use Spryker\Zed\Security\SecurityConfig;
 use Spryker\Zed\Security\SecurityDependencyProvider;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelperTrait;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
 
 class SecurityHelper extends Module
 {
@@ -36,11 +42,16 @@ class SecurityHelper extends Module
     use ConfigHelperTrait;
     use CommunicationHelperTrait;
     use BusinessHelperTrait;
+    use ContainerHelperTrait;
 
     /**
      * @var string
      */
     protected const MODULE_NAME = 'Security';
+
+    protected const string SERVICE_SESSION = 'session';
+
+    protected const string SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @var array
@@ -165,6 +176,23 @@ class SecurityHelper extends Module
         $securityFactory = $this->getCommunicationHelper()->getFactory(static::MODULE_NAME);
 
         return $securityFactory;
+    }
+
+    public function addFormCsrfProvider(): CsrfTokenManagerInterface
+    {
+        $container = $this->getContainerHelper()->getContainer();
+
+        $request = new Request();
+        $request->setSession($container->get(static::SERVICE_SESSION));
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        $csrfTokenManager = new CsrfTokenManager(null, new SessionTokenStorage($requestStack));
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function () use ($csrfTokenManager): CsrfTokenManagerInterface {
+            return $csrfTokenManager;
+        });
+
+        return $csrfTokenManager;
     }
 
     protected function addFirewalls(SecurityBuilderInterface $securityBuilder, SecurityConfigurationInterface $securityConfiguration): SecurityBuilderInterface

@@ -139,6 +139,10 @@ class YvesSecurityApplicationPluginTest extends Unit
 
     protected const string PLANTED_CSRF_TOKEN = 'planted-csrf-token';
 
+    protected const string LOGIN_FORM_NAME = 'loginForm';
+
+    protected const string INVALID_CSRF_TOKEN = 'invalid-csrf-token';
+
     /**
      * @var \SprykerTest\Yves\Security\SecurityTester
      */
@@ -323,6 +327,37 @@ class YvesSecurityApplicationPluginTest extends Unit
         // Assert
         $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
         $this->assertFalse($httpKernelBrowser->getRequest()->getSession()->has(static::CSRF_TOKEN_SESSION_KEY), 'Expected the pre-login CSRF tokens to be removed after a successful login.');
+    }
+
+    public function testFormAuthenticationWithValidCsrfTokenLogsUserIn(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $this->tester->getContainer()->get(static::SERVICE_SESSION)->start();
+        $csrfToken = $this->tester->addFormCsrfProvider()->getToken(static::LOGIN_FORM_NAME)->getValue();
+
+        // Act
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['username' => static::USER_NAME, 'password' => static::USER_PASSWORD, '_token' => $csrfToken]]);
+
+        // Assert
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+    }
+
+    public function testFormAuthenticationWithInvalidCsrfTokenFails(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $this->tester->getContainer()->get(static::SERVICE_SESSION)->start();
+        $this->tester->addFormCsrfProvider();
+
+        // Act
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['username' => static::USER_NAME, 'password' => static::USER_PASSWORD, '_token' => static::INVALID_CSRF_TOKEN]]);
+
+        // Assert
+        $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame('{"message":"Invalid CSRF token."}', $httpKernelBrowser->getResponse()->getContent());
     }
 
     /**

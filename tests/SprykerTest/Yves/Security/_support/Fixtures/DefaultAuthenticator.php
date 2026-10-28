@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
@@ -37,6 +38,8 @@ class DefaultAuthenticator implements AuthenticatorInterface, AuthenticationEntr
      * @var string
      */
     protected const PARAMETER_PASSWORD = 'password';
+
+    protected const string PARAMETER_CSRF_TOKEN = '_token';
 
     /**
      * @var string
@@ -86,6 +89,10 @@ class DefaultAuthenticator implements AuthenticatorInterface, AuthenticationEntr
     {
         $data = $request->request->all(static::PARAMETER_LOGIN_FORM);
         $userProvider = new DefaultUserProvider();
+        $badges = isset($data[static::PARAMETER_REMEMBER_ME]) ? [(new RememberMeBadge())->enable()] : [];
+        if (isset($data[static::PARAMETER_CSRF_TOKEN])) {
+            $badges[] = new CsrfTokenBadge(static::PARAMETER_LOGIN_FORM, $data[static::PARAMETER_CSRF_TOKEN]);
+        }
 
         return new Passport(
             new UserBadge(
@@ -95,7 +102,7 @@ class DefaultAuthenticator implements AuthenticatorInterface, AuthenticationEntr
                 },
             ),
             new PasswordCredentials($data[static::PARAMETER_PASSWORD]),
-            isset($data[static::PARAMETER_REMEMBER_ME]) ? [(new RememberMeBadge())->enable()] : [],
+            $badges,
         );
     }
 
