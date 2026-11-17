@@ -1425,7 +1425,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $resource = function () use ($securityRoutes) {
             $routeCollection = new RouteCollection();
             foreach ($securityRoutes as $route) {
-                [$method, $url, $name] = $route;
+                [, $url, $name] = $route;
 
                 $route = new Route($url);
 

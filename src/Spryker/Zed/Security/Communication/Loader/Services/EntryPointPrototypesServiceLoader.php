@@ -81,8 +81,8 @@ class EntryPointPrototypesServiceLoader implements ServiceLoaderInterface
                 $options[static::OPTION_LOGIN_PATH] = $options[static::OPTION_LOGIN_PATH] ?? static::URI_LOGIN;
                 $options[static::OPTION_USE_FORWARD] = $options[static::OPTION_USE_FORWARD] ?? false;
 
-                foreach (static::ENTRY_POINTS as $entry_point) {
-                    $authenticator = sprintf(static::AUTHENTICATOR_PLACEHOLDER, $firewallName, $entry_point);
+                foreach (static::ENTRY_POINTS as $entryPoint) {
+                    $authenticator = sprintf(static::AUTHENTICATOR_PLACEHOLDER, $firewallName, $entryPoint);
 
                     if ($container->has($authenticator)) {
                         return $container->get($authenticator);
